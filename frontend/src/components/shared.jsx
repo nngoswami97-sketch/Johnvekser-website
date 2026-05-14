@@ -254,8 +254,14 @@ export const Navbar = () => {
   const navItems = [
     { label: "About", to: "/about", testid: "nav-about" },
     { label: "Mentorship", to: "/mentorship", testid: "nav-mentorship" },
-    { label: "Donate", to: "/donate", testid: "nav-donate" },
-    { label: "Contact", to: "/contact", testid: "nav-contact" },
+    { label: "Donation", to: "/donate", testid: "nav-donate" },
+  ];
+  const externalItems = [
+    {
+      label: "Careers",
+      href: "https://vekser.com/careers",
+      testid: "nav-careers",
+    },
   ];
 
   // Lock body scroll when mobile menu open
@@ -270,51 +276,74 @@ export const Navbar = () => {
     <>
       <header
         data-testid="site-navbar"
-        className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-white/70 border-b border-black/5"
+        className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-white/80 border-b border-black/5"
       >
-        <Container className="flex items-center justify-between h-16 lg:h-20">
-          <Link
-            data-testid="nav-logo"
-            to="/"
-            className="flex items-center gap-2 group"
-          >
-            <span className="relative inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-white text-[15px] font-bold font-display">
-              JV
-              <span className="absolute -right-1 -top-1 w-2.5 h-2.5 rounded-full bg-black border-2 border-white" />
-            </span>
-            <span className="font-display font-bold tracking-tight text-[17px]">
-              John Vekser
-            </span>
-          </Link>
+        <Container className="flex items-center h-16 lg:h-20 gap-10">
+          {/* Left cluster — logo + nav */}
+          <div className="flex items-center gap-10 flex-1">
+            <Link
+              data-testid="nav-logo"
+              to="/"
+              className="flex items-center gap-2 group shrink-0"
+            >
+              <span className="relative inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-white text-[15px] font-bold font-display">
+                JV
+                <span className="absolute -right-1 -top-1 w-2.5 h-2.5 rounded-full bg-black border-2 border-white" />
+              </span>
+              <span className="font-display font-extrabold tracking-[-0.02em] text-[16px] uppercase">
+                John Vekser
+              </span>
+            </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-9 text-[13px] font-medium text-neutral-700">
-            {navItems.map((n) => (
-              <Link
-                key={n.to}
-                to={n.to}
-                data-testid={n.testid}
-                className={`hover:text-black transition-colors ${
-                  pathname === n.to ? "text-black" : ""
-                }`}
-              >
-                {n.label}
-              </Link>
-            ))}
-          </nav>
+            {/* Desktop nav — left aligned next to logo */}
+            <nav className="hidden lg:flex items-center gap-8 text-[13px] font-medium text-neutral-700">
+              {navItems.map((n) => (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  data-testid={n.testid}
+                  className={`relative py-1 transition-colors group ${
+                    pathname === n.to ? "text-black" : "hover:text-black"
+                  }`}
+                >
+                  <span>{n.label}</span>
+                  <span
+                    className={`absolute left-0 -bottom-0.5 h-px bg-black transition-all duration-300 ${
+                      pathname === n.to
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    }`}
+                  />
+                </Link>
+              ))}
+              {externalItems.map((n) => (
+                <a
+                  key={n.href}
+                  href={n.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid={n.testid}
+                  className="relative py-1 transition-colors group inline-flex items-center gap-1 hover:text-black"
+                >
+                  <span>{n.label}</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  <span className="absolute left-0 -bottom-0.5 h-px bg-black w-0 group-hover:w-full transition-all duration-300" />
+                </a>
+              ))}
+            </nav>
+          </div>
 
-          {/* Right cluster */}
-          <div className="flex items-center gap-3">
+          {/* Right cluster — CTA + hamburger */}
+          <div className="flex items-center gap-3 shrink-0">
             <Link
               data-testid="nav-apply-cta"
               to="/donate"
-              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2.5 text-[13px] font-semibold hover:-translate-y-0.5 transition-transform shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)]"
+              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2.5 text-[13px] font-semibold tracking-tight hover:-translate-y-0.5 transition-transform shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)]"
             >
-              Donate
-              <ArrowRight className="w-3.5 h-3.5" />
+              Uplift Communities
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
 
-            {/* Hamburger — mobile + tablet */}
             <button
               data-testid="nav-hamburger"
               onClick={() => setMobileOpen(true)}
@@ -338,12 +367,10 @@ export const Navbar = () => {
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-[70] lg:hidden"
           >
-            {/* Overlay */}
             <div
               className="absolute inset-0 bg-black/60 backdrop-blur-sm"
               onClick={() => setMobileOpen(false)}
             />
-            {/* Panel */}
             <motion.aside
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -360,7 +387,7 @@ export const Navbar = () => {
                   <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-white text-[15px] font-bold font-display">
                     JV
                   </span>
-                  <span className="font-display font-bold tracking-tight text-[17px]">
+                  <span className="font-display font-extrabold tracking-[-0.02em] text-[16px] uppercase">
                     John Vekser
                   </span>
                 </Link>
@@ -380,7 +407,9 @@ export const Navbar = () => {
                   onClick={() => setMobileOpen(false)}
                   data-testid="mobile-nav-home"
                   className={`group flex items-center justify-between font-display font-extrabold tracking-tight text-[28px] py-3 border-b border-black/5 ${
-                    pathname === "/" ? "text-black" : "text-neutral-500 hover:text-black"
+                    pathname === "/"
+                      ? "text-black"
+                      : "text-neutral-500 hover:text-black"
                   } transition-colors`}
                 >
                   Home
@@ -402,6 +431,32 @@ export const Navbar = () => {
                     <ArrowUpRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                   </Link>
                 ))}
+                <Link
+                  to="/contact"
+                  onClick={() => setMobileOpen(false)}
+                  data-testid="mobile-nav-contact"
+                  className={`group flex items-center justify-between font-display font-extrabold tracking-tight text-[28px] py-3 border-b border-black/5 ${
+                    pathname === "/contact"
+                      ? "text-black"
+                      : "text-neutral-500 hover:text-black"
+                  } transition-colors`}
+                >
+                  Contact
+                  <ArrowUpRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                </Link>
+                {externalItems.map((n) => (
+                  <a
+                    key={n.href}
+                    href={n.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`mobile-${n.testid}`}
+                    className="group flex items-center justify-between font-display font-extrabold tracking-tight text-[28px] py-3 border-b border-black/5 text-neutral-500 hover:text-black transition-colors"
+                  >
+                    {n.label}
+                    <ArrowUpRight className="w-5 h-5 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                ))}
               </nav>
 
               <div className="p-6 border-t border-black/5">
@@ -411,8 +466,8 @@ export const Navbar = () => {
                   data-testid="mobile-donate-cta"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-black text-white px-6 py-4 text-[14px] font-semibold hover:-translate-y-0.5 transition-transform"
                 >
-                  Donate now
-                  <ArrowRight className="w-4 h-4" />
+                  Uplift Communities
+                  <ArrowUpRight className="w-4 h-4" />
                 </Link>
               </div>
             </motion.aside>
