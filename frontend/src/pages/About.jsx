@@ -280,76 +280,129 @@ const GiveBack = () => (
 );
 
 /* ================================================================ */
-/*  Slide 4 — Mission & Values                                      */
+/*  Slide 4 — Mission & Values (split layout)                       */
 /* ================================================================ */
 
-const Mission = () => (
-  <section
-    id="mission"
-    data-testid="mission-section"
-    className="py-28 lg:py-44 bg-white relative overflow-hidden"
-  >
-    <div className="absolute top-10 -left-32 w-96 h-96 rounded-full bg-neutral-100 blur-3xl" />
-    <div className="absolute bottom-0 -right-32 w-96 h-96 rounded-full bg-neutral-100 blur-3xl" />
+const Mission = () => {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [800, 2400], [60, -60]);
+  return (
+    <section
+      id="mission"
+      data-testid="mission-section"
+      className="relative py-28 lg:py-40 bg-white overflow-hidden"
+    >
+      <div className="absolute top-10 -left-32 w-96 h-96 rounded-full bg-neutral-100 blur-3xl" />
+      <div className="absolute bottom-0 -right-32 w-96 h-96 rounded-full bg-neutral-100 blur-3xl" />
 
-    <Container className="relative text-center">
-      <Overline>04 — Our Mission</Overline>
-      <motion.h2
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        className="mt-8 font-display font-extrabold tracking-[-0.045em] leading-[0.98] balance text-[clamp(2.4rem,6vw,5.4rem)] max-w-5xl mx-auto"
-      >
-        To transform disadvantaged communities into{" "}
-        <Highlight>thriving economies</Highlight> through entrepreneurship.
-      </motion.h2>
-
-      <motion.div
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        custom={1}
-        className="mt-14 max-w-3xl mx-auto bg-neutral-50 border border-black/5 rounded-3xl p-8 lg:p-10 text-left flex flex-col sm:flex-row items-start gap-6"
-      >
-        <Quote className="w-10 h-10 text-neutral-300 shrink-0" />
-        <div>
-          <p className="font-display text-[20px] lg:text-[22px] leading-snug tracking-tight">
-            &ldquo;Every founder we back becomes a multiplier — they pull jobs,
-            confidence, and capital into their towns. That&rsquo;s the whole
-            point of this work.&rdquo;
+      <Container className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        {/* Left — content */}
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={fadeUp}
+          className="lg:col-span-7"
+        >
+          <Overline>04 — Our Mission</Overline>
+          <h2 className="mt-6 font-display font-extrabold tracking-[-0.04em] leading-[0.98] balance text-[clamp(2.2rem,5.4vw,4.4rem)]">
+            To transform disadvantaged communities into{" "}
+            <Highlight>thriving economies</Highlight> through entrepreneurship.
+          </h2>
+          <p className="mt-7 max-w-xl text-[17px] text-neutral-600 leading-relaxed">
+            We back founders in places traditional capital ignores — and stand
+            by them as their businesses pull jobs, confidence, and capital into
+            their towns.
           </p>
-          <div className="mt-6 flex items-center gap-3">
-            <img
-              data-testid="founder-avatar"
-              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&q=85&w=200"
-              alt="John Daniel — Founder"
-              className="w-12 h-12 rounded-full object-cover border border-black/10"
-            />
-            <div>
-              <div className="text-[14px] font-semibold">John Daniel</div>
-              <div className="text-[11px] uppercase tracking-[0.18em] text-neutral-500">
-                Founder · Miami, FL
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
 
-      <motion.div
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        custom={2}
-        className="mt-12"
-      >
-        <PillButton testid="mission-cta">Talk to us</PillButton>
-      </motion.div>
-    </Container>
-  </section>
-);
+          {/* Founder quote inline */}
+          <motion.figure
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="mt-10 bg-neutral-50 border border-black/5 rounded-3xl p-6 lg:p-7 flex items-start gap-5 max-w-xl"
+          >
+            <Quote className="w-7 h-7 text-neutral-300 shrink-0" />
+            <div>
+              <blockquote className="font-display text-[16px] lg:text-[17px] leading-snug tracking-tight">
+                &ldquo;Every founder we back becomes a multiplier — that&rsquo;s
+                the whole point of this work.&rdquo;
+              </blockquote>
+              <figcaption className="mt-4 flex items-center gap-3">
+                <img
+                  data-testid="founder-avatar"
+                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&q=85&w=200"
+                  alt="John Daniel — Founder"
+                  className="w-10 h-10 rounded-full object-cover border border-black/10"
+                />
+                <div>
+                  <div className="text-[13px] font-semibold">John Daniel</div>
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-neutral-500">
+                    Founder · Miami, FL
+                  </div>
+                </div>
+              </figcaption>
+            </div>
+          </motion.figure>
+
+          <div className="mt-10">
+            <PillButton testid="mission-cta">Talk to us</PillButton>
+          </div>
+        </motion.div>
+
+        {/* Right — founder portrait with motion */}
+        <motion.div
+          style={{ y }}
+          initial={{ opacity: 0, scale: 0.92 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          className="lg:col-span-5 relative"
+        >
+          <div className="relative aspect-[4/5] w-full max-w-md mx-auto">
+            {/* Decorative shapes */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 50, ease: "linear", repeat: Infinity }}
+              className="absolute -inset-6 rounded-[6rem_2rem_6rem_2rem] border border-dashed border-black/15"
+            />
+            <div className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full bg-black hidden md:block" />
+            <div className="absolute -top-6 -right-6 w-20 h-20 rounded-full border border-black/30 hidden md:block" />
+
+            <div className="relative w-full h-full overflow-hidden rounded-[1rem_5rem_1rem_5rem] bg-neutral-100 shadow-[0_25px_80px_-30px_rgba(0,0,0,0.4)]">
+              <img
+                data-testid="mission-portrait"
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"
+                alt="John Daniel — founder portrait"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
+              />
+            </div>
+
+            <FeaturePopup
+              testid="mission-popup-since"
+              icon={Award}
+              eyebrow="Founded"
+              title="2022 · Miami"
+              position="top-right"
+              delay={0.5}
+            />
+            <FeaturePopup
+              testid="mission-popup-impact"
+              icon={Globe2}
+              eyebrow="Mission"
+              title="Thriving economies"
+              trend="6 continents · live"
+              position="bottom-left"
+              delay={0.8}
+              dark
+            />
+          </div>
+        </motion.div>
+      </Container>
+    </section>
+  );
+};
 
 /* ================================================================ */
 /*  Slides 5-7 — Three values                                       */
@@ -492,56 +545,6 @@ const OurPartners = () => (
         Logos to follow · text placeholders for now
       </p>
     </Container>
-  </section>
-);
-
-/* ================================================================ */
-/*  Slide 8 — Partners & Sponsors                                   */
-/* ================================================================ */
-
-const PARTNERS = [
-  { name: "Microsoft", src: "https://www.vectorlogo.zone/logos/microsoft/microsoft-ar21.svg" },
-  { name: "Google", src: "https://www.vectorlogo.zone/logos/google/google-ar21.svg" },
-  { name: "AWS", src: "https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-ar21.svg" },
-  { name: "Slack", src: "https://www.vectorlogo.zone/logos/slack/slack-ar21.svg" },
-  { name: "Stripe", src: "https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" },
-  { name: "Notion", src: "https://www.vectorlogo.zone/logos/notion/notion-ar21.svg" },
-];
-
-const Partners = () => (
-  <section
-    id="partners"
-    data-testid="about-partners-section"
-    className="py-24 lg:py-32 bg-white border-y border-black/5 overflow-hidden"
-  >
-    <Container className="text-center mb-12">
-      <Overline>08 — Ecosystem</Overline>
-      <h2 className="mt-6 font-display font-bold tracking-tight text-3xl lg:text-5xl">
-        Partners <Highlight>and sponsors.</Highlight>
-      </h2>
-      <p className="mt-4 text-[15px] text-neutral-500 max-w-md mx-auto">
-        We&rsquo;re built alongside the platforms that power modern business.
-      </p>
-    </Container>
-    <div className="relative overflow-hidden">
-      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-      <div className="flex w-max marquee-track">
-        {[...PARTNERS, ...PARTNERS, ...PARTNERS].map((p, i) => (
-          <div
-            key={i}
-            data-testid={`about-partner-${i}`}
-            className="flex items-center justify-center min-w-[240px] h-24 grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition-all duration-500"
-          >
-            <img
-              src={p.src}
-              alt={p.name}
-              className="max-h-10 lg:max-h-12 object-contain"
-            />
-          </div>
-        ))}
-      </div>
-    </div>
   </section>
 );
 
@@ -693,7 +696,6 @@ export default function About() {
         <Mission />
         <Values />
         <OurPartners />
-        <Partners />
         <Story />
       </main>
       <Footer />
