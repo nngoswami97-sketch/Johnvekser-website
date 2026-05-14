@@ -1,5 +1,5 @@
-import React from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, useInView, useSpring, animate } from "framer-motion";
 import {
   ArrowUpRight,
   Sparkles,
@@ -27,6 +27,63 @@ const fadeUp = {
 const Container = ({ children, className = "" }) => (
   <div className={`max-w-7xl mx-auto px-6 lg:px-10 ${className}`}>{children}</div>
 );
+
+/* Gold highlight with animated underline */
+const Highlight = ({ children, delay = 0.25 }) => (
+  <span className="font-serif-display italic relative inline-block">
+    <span className="relative z-10">{children}</span>
+    <motion.span
+      aria-hidden
+      initial={{ scaleX: 0, opacity: 0 }}
+      whileInView={{ scaleX: 1, opacity: 1 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ delay, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+      style={{ originX: 0 }}
+      className="absolute left-0 right-0 bottom-[0.08em] h-[0.18em] bg-[#B8965A]/25 rounded-full -z-0"
+    />
+  </span>
+);
+
+/* Animated number counter — runs once when in view */
+const useCounter = (target, durationSec = 1.6, decimals = 0) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(0, target, {
+      duration: durationSec,
+      ease: [0.22, 1, 0.36, 1],
+      onUpdate: (v) => setVal(v),
+    });
+    return controls.stop;
+  }, [inView, target, durationSec]);
+  return [ref, decimals > 0 ? val.toFixed(decimals) : Math.round(val)];
+};
+
+const StatCounter = ({ value, prefix = "", suffix = "" }) => {
+  const [ref, n] = useCounter(value);
+  return (
+    <span ref={ref} className="tabular-nums">
+      {prefix}
+      {n}
+      {suffix}
+    </span>
+  );
+};
+
+/* Magnetic top scroll progress bar */
+const ScrollProgress = () => {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.4 });
+  return (
+    <motion.div
+      data-testid="scroll-progress"
+      style={{ scaleX, originX: 0 }}
+      className="fixed top-0 left-0 right-0 h-[2px] bg-[#B8965A] z-[60]"
+    />
+  );
+};
 
 const Overline = ({ children, dark = false }) => (
   <span
@@ -148,10 +205,7 @@ const Hero = () => {
 
           <h1 className="mt-6 font-display font-extrabold tracking-[-0.04em] leading-[0.95] text-[clamp(2.6rem,7vw,5.6rem)]">
             Funding ideas in{" "}
-            <span className="font-serif-display italic font-normal">
-              diverse
-            </span>{" "}
-            regions.
+            <Highlight>diverse regions</Highlight>.
           </h1>
 
           <p className="mt-7 max-w-xl text-[17px] lg:text-[18px] leading-relaxed text-neutral-600 font-body">
@@ -178,9 +232,9 @@ const Hero = () => {
           {/* Trust stats */}
           <div className="mt-14 grid grid-cols-3 gap-6 max-w-md">
             {[
-              { v: "6", l: "Continents reached" },
-              { v: "120+", l: "Founders backed" },
-              { v: "$24M", l: "Capital deployed" },
+              { n: 6, suffix: "", l: "Continents reached" },
+              { n: 120, suffix: "+", l: "Founders backed" },
+              { n: 24, prefix: "$", suffix: "M", l: "Capital deployed" },
             ].map((s, i) => (
               <motion.div
                 key={s.l}
@@ -191,7 +245,7 @@ const Hero = () => {
                 data-testid={`hero-stat-${i}`}
               >
                 <div className="font-display text-3xl lg:text-4xl font-bold tracking-tight">
-                  {s.v}
+                  <StatCounter value={s.n} prefix={s.prefix || ""} suffix={s.suffix || ""} />
                 </div>
                 <div className="mt-1 text-[11px] uppercase tracking-[0.18em] text-neutral-500">
                   {s.l}
@@ -323,10 +377,7 @@ const Community = () => (
         <Overline>02 — The Mission</Overline>
         <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5.2vw,4rem)]">
           Turning disadvantaged communities into{" "}
-          <span className="font-serif-display italic">
-            thriving
-          </span>{" "}
-          economies.
+          <Highlight>thriving economies</Highlight>.
         </h2>
         <p className="mt-6 max-w-xl text-[17px] text-neutral-600 leading-relaxed">
           We sponsor entrepreneurs from disadvantaged backgrounds with big ideas
@@ -374,10 +425,7 @@ const Redefining = () => (
           <Overline>03 — What we do</Overline>
           <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5vw,4rem)]">
             Redefining businesses,{" "}
-            <span className="font-serif-display italic">
-              enriching
-            </span>{" "}
-            communities.
+            <Highlight>enriching communities</Highlight>.
           </h2>
         </motion.div>
         <motion.p
@@ -454,9 +502,7 @@ const Shape = () => {
           variants={fadeUp}
           className="mt-8 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[clamp(2.8rem,9vw,8.5rem)]"
         >
-          Shape <span className="font-serif-display italic">tomorrow&rsquo;s</span>
-          <br />
-          economies.
+          Shape <Highlight>tomorrow&rsquo;s economies</Highlight>.
         </motion.h2>
 
         <div className="mt-14 flex flex-wrap items-center justify-center gap-3">
@@ -530,10 +576,7 @@ const Pillars = () => (
         <Overline>05 — 07 The Pillars</Overline>
         <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5vw,4rem)]">
           Three forces that turn{" "}
-          <span className="font-serif-display italic">
-            potential
-          </span>{" "}
-          into outcome.
+          <Highlight>potential into outcome</Highlight>.
         </h2>
       </div>
 
@@ -618,10 +661,7 @@ const Global = () => (
       >
         <Overline>08 — Global Footprint</Overline>
         <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5vw,4rem)]">
-          Fostering entrepreneurship{" "}
-          <span className="font-serif-display italic">
-            globally.
-          </span>
+          Fostering <Highlight>entrepreneurship globally</Highlight>.
         </h2>
         <p className="mt-6 max-w-xl text-[17px] text-neutral-600 leading-relaxed">
           With a base in Florida and offices across Los Angeles, Peru, India,
@@ -669,10 +709,22 @@ const Global = () => (
         className="lg:col-span-5 relative"
       >
         <div className="relative aspect-square max-w-md mx-auto">
-          {/* Concentric rings */}
-          <div className="absolute inset-0 rounded-full border border-black/10" />
-          <div className="absolute inset-6 rounded-full border border-black/10" />
-          <div className="absolute inset-12 rounded-full border border-black/10" />
+          {/* Concentric rings — animated dashed */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 60, ease: "linear", repeat: Infinity }}
+            className="absolute inset-0 rounded-full border border-dashed border-black/15"
+          />
+          <motion.div
+            animate={{ rotate: -360 }}
+            transition={{ duration: 90, ease: "linear", repeat: Infinity }}
+            className="absolute inset-6 rounded-full border border-black/10"
+          />
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 45, ease: "linear", repeat: Infinity }}
+            className="absolute inset-12 rounded-full border border-dashed border-[#B8965A]/40"
+          />
           <div className="absolute inset-20 rounded-full border border-black/15" />
 
           {/* Center globe img */}
@@ -684,14 +736,14 @@ const Global = () => (
             />
           </div>
 
-          {/* Floating city dots */}
+          {/* Floating city dots — pulsing */}
           {[
-            { top: "8%", left: "50%" },
-            { top: "30%", left: "92%" },
-            { top: "72%", left: "84%" },
-            { top: "90%", left: "42%" },
-            { top: "60%", left: "6%" },
-            { top: "20%", left: "10%" },
+            { top: "8%", left: "50%", label: "Florida" },
+            { top: "30%", left: "92%", label: "Lisbon" },
+            { top: "72%", left: "84%", label: "Tel Aviv" },
+            { top: "90%", left: "42%", label: "Mumbai" },
+            { top: "60%", left: "6%", label: "Lima" },
+            { top: "20%", left: "10%", label: "LA" },
           ].map((pos, i) => (
             <motion.span
               key={i}
@@ -699,9 +751,12 @@ const Global = () => (
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 + i * 0.12, duration: 0.5 }}
-              style={pos}
-              className="absolute w-3 h-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black border-4 border-white shadow-md"
-            />
+              style={{ top: pos.top, left: pos.left }}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+            >
+              <span className="absolute inset-0 w-3 h-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#B8965A]/40 animate-ping" />
+              <span className="relative block w-3 h-3 rounded-full bg-black border-4 border-white shadow-md" />
+            </motion.span>
           ))}
         </div>
       </motion.div>
@@ -844,9 +899,7 @@ const FinalCTA = () => (
         variants={fadeUp}
         className="mt-8 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[clamp(2.8rem,8.5vw,7.8rem)]"
       >
-        Building <span className="font-serif-display italic">entrepreneurial</span>
-        <br />
-        ecosystems.
+        Building <Highlight>entrepreneurial ecosystems</Highlight>.
       </motion.h2>
 
       <motion.p
@@ -972,6 +1025,7 @@ const Footer = () => (
 export default function Landing() {
   return (
     <div data-testid="landing-root" className="bg-white text-black overflow-hidden">
+      <ScrollProgress />
       <Navbar />
       <main className="pt-0">
         <Hero />
