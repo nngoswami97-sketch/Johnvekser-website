@@ -243,6 +243,7 @@ export const Navbar = () => {
   const { pathname } = useLocation();
   const navItems = [
     { label: "Home", to: "/", testid: "nav-home" },
+    { label: "About", to: "/about", testid: "nav-about" },
     { label: "Mentorship", to: "/mentorship", testid: "nav-mentorship" },
     { label: "Donate", to: "/donate", testid: "nav-donate" },
   ];
@@ -347,6 +348,11 @@ export const Footer = () => (
             <li>
               <Link to="/" className="text-white/80 hover:text-white">
                 Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" className="text-white/80 hover:text-white">
+                About
               </Link>
             </li>
             <li>
