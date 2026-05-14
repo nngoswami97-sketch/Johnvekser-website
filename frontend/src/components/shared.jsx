@@ -246,6 +246,7 @@ export const Navbar = () => {
     { label: "About", to: "/about", testid: "nav-about" },
     { label: "Mentorship", to: "/mentorship", testid: "nav-mentorship" },
     { label: "Donate", to: "/donate", testid: "nav-donate" },
+    { label: "Contact", to: "/contact", testid: "nav-contact" },
   ];
   return (
     <header
@@ -363,6 +364,11 @@ export const Footer = () => (
             <li>
               <Link to="/donate" className="text-white/80 hover:text-white">
                 Donate
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="text-white/80 hover:text-white">
+                Contact
               </Link>
             </li>
             <li>
