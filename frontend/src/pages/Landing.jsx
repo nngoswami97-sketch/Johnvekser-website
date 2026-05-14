@@ -148,7 +148,7 @@ const Hero = () => {
 
           <h1 className="mt-6 font-display font-extrabold tracking-[-0.04em] leading-[0.95] text-[clamp(2.6rem,7vw,5.6rem)]">
             Funding ideas in{" "}
-            <span className="font-serif-display italic font-normal text-neutral-500">
+            <span className="font-serif-display italic font-normal">
               diverse
             </span>{" "}
             regions.
@@ -323,7 +323,7 @@ const Community = () => (
         <Overline>02 — The Mission</Overline>
         <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5.2vw,4rem)]">
           Turning disadvantaged communities into{" "}
-          <span className="font-serif-display italic text-neutral-500">
+          <span className="font-serif-display italic">
             thriving
           </span>{" "}
           economies.
@@ -374,7 +374,7 @@ const Redefining = () => (
           <Overline>03 — What we do</Overline>
           <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5vw,4rem)]">
             Redefining businesses,{" "}
-            <span className="font-serif-display italic text-neutral-500">
+            <span className="font-serif-display italic">
               enriching
             </span>{" "}
             communities.
@@ -454,7 +454,7 @@ const Shape = () => {
           variants={fadeUp}
           className="mt-8 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[clamp(2.8rem,9vw,8.5rem)]"
         >
-          Shape <span className="font-serif-display italic text-neutral-400">tomorrow&rsquo;s</span>
+          Shape <span className="font-serif-display italic">tomorrow&rsquo;s</span>
           <br />
           economies.
         </motion.h2>
@@ -530,7 +530,7 @@ const Pillars = () => (
         <Overline>05 — 07 The Pillars</Overline>
         <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5vw,4rem)]">
           Three forces that turn{" "}
-          <span className="font-serif-display italic text-neutral-500">
+          <span className="font-serif-display italic">
             potential
           </span>{" "}
           into outcome.
@@ -619,7 +619,7 @@ const Global = () => (
         <Overline>08 — Global Footprint</Overline>
         <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5vw,4rem)]">
           Fostering entrepreneurship{" "}
-          <span className="font-serif-display italic text-neutral-500">
+          <span className="font-serif-display italic">
             globally.
           </span>
         </h2>
@@ -844,7 +844,7 @@ const FinalCTA = () => (
         variants={fadeUp}
         className="mt-8 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[clamp(2.8rem,8.5vw,7.8rem)]"
       >
-        Building <span className="font-serif-display italic text-neutral-400">entrepreneurial</span>
+        Building <span className="font-serif-display italic">entrepreneurial</span>
         <br />
         ecosystems.
       </motion.h2>
