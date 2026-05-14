@@ -212,9 +212,9 @@ const Hero = () => {
         >
           <Overline>Global Entrepreneurship Fund</Overline>
 
-          <h1 className="mt-6 font-display font-extrabold tracking-[-0.04em] leading-[0.95] text-[clamp(2.6rem,7vw,5.6rem)]">
+          <h1 className="mt-6 font-display font-extrabold tracking-[-0.04em] leading-[0.98] balance text-[clamp(2.4rem,6.2vw,5.2rem)]">
             Funding ideas in{" "}
-            <Highlight>diverse regions</Highlight>.
+            <Highlight>diverse regions.</Highlight>
           </h1>
 
           <p className="mt-7 max-w-xl text-[17px] lg:text-[18px] leading-relaxed text-neutral-600 font-body">
@@ -384,9 +384,9 @@ const Community = () => (
         className="lg:col-span-7 order-1 lg:order-2"
       >
         <Overline>02 — The Mission</Overline>
-        <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5.2vw,4rem)]">
+        <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.05] balance text-[clamp(1.9rem,4.8vw,3.6rem)]">
           Turning disadvantaged communities into{" "}
-          <Highlight>thriving economies</Highlight>.
+          <Highlight>thriving economies.</Highlight>
         </h2>
         <p className="mt-6 max-w-xl text-[17px] text-neutral-600 leading-relaxed">
           We sponsor entrepreneurs from disadvantaged backgrounds with big ideas
@@ -432,9 +432,9 @@ const Redefining = () => (
           className="max-w-2xl"
         >
           <Overline>03 — What we do</Overline>
-          <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5vw,4rem)]">
+          <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.05] balance text-[clamp(1.9rem,4.8vw,3.6rem)]">
             Redefining businesses,{" "}
-            <Highlight>enriching communities</Highlight>.
+            <Highlight>enriching communities.</Highlight>
           </h2>
         </motion.div>
         <motion.p
@@ -509,9 +509,9 @@ const Shape = () => {
           whileInView="show"
           viewport={{ once: true }}
           variants={fadeUp}
-          className="mt-8 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[clamp(2.8rem,9vw,8.5rem)]"
+          className="mt-8 font-display font-extrabold tracking-[-0.045em] leading-[0.95] balance text-[clamp(2.4rem,7.2vw,6.4rem)]"
         >
-          Shape <Highlight>tomorrow&rsquo;s economies</Highlight>.
+          Shape <Highlight>tomorrow&rsquo;s economies.</Highlight>
         </motion.h2>
 
         <div className="mt-14 flex flex-wrap items-center justify-center gap-3">
@@ -583,9 +583,9 @@ const Pillars = () => (
     <Container>
       <div className="max-w-2xl mb-20">
         <Overline>05 — 07 The Pillars</Overline>
-        <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5vw,4rem)]">
+        <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.05] balance text-[clamp(1.9rem,4.8vw,3.6rem)]">
           Three forces that turn{" "}
-          <Highlight>potential into outcome</Highlight>.
+          <Highlight>potential into outcome.</Highlight>
         </h2>
       </div>
 
@@ -669,8 +669,8 @@ const Global = () => (
         className="lg:col-span-7"
       >
         <Overline>08 — Global Footprint</Overline>
-        <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.02] text-[clamp(2rem,5vw,4rem)]">
-          Fostering <Highlight>entrepreneurship globally</Highlight>.
+        <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.05] balance text-[clamp(1.9rem,4.8vw,3.6rem)]">
+          Fostering <Highlight>entrepreneurship globally.</Highlight>
         </h2>
         <p className="mt-6 max-w-xl text-[17px] text-neutral-600 leading-relaxed">
           With a base in Florida and offices across Los Angeles, Peru, India,
@@ -906,9 +906,9 @@ const FinalCTA = () => (
         whileInView="show"
         viewport={{ once: true }}
         variants={fadeUp}
-        className="mt-8 font-display font-extrabold tracking-[-0.045em] leading-[0.92] text-[clamp(2.8rem,8.5vw,7.8rem)]"
+        className="mt-8 font-display font-extrabold tracking-[-0.045em] leading-[0.95] balance text-[clamp(2.4rem,7vw,6rem)]"
       >
-        Building <Highlight>entrepreneurial ecosystems</Highlight>.
+        Building <Highlight>entrepreneurial ecosystems.</Highlight>
       </motion.h2>
 
       <motion.p
