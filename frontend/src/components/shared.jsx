@@ -244,6 +244,7 @@ export const Navbar = () => {
   const navItems = [
     { label: "Home", to: "/", testid: "nav-home" },
     { label: "Mentorship", to: "/mentorship", testid: "nav-mentorship" },
+    { label: "Donate", to: "/donate", testid: "nav-donate" },
   ];
   return (
     <header
@@ -351,6 +352,11 @@ export const Footer = () => (
             <li>
               <Link to="/mentorship" className="text-white/80 hover:text-white">
                 Mentorship
+              </Link>
+            </li>
+            <li>
+              <Link to="/donate" className="text-white/80 hover:text-white">
+                Donate
               </Link>
             </li>
             <li>
