@@ -1,0 +1,171 @@
+{
+  "theme": "LIGHT",
+  "archetype": "4 (Swiss & High-Contrast)",
+  "design_philosophy": "Enterprise-grade, minimal, futuristic, clean, and highly trustworthy. Focus on a modern SaaS aesthetic with strong visual hierarchy, smooth animations, glassmorphism, clean whitespace, and organic shapes for imagery.",
+  "colors": {
+    "background": "#FFFFFF",
+    "foreground": "#0A0A0A",
+    "primary": "#0A0A0A",
+    "primary_foreground": "#FFFFFF",
+    "secondary": "#FAFAFA",
+    "secondary_foreground": "#171717",
+    "muted": "#F5F5F5",
+    "muted_foreground": "#737373",
+    "accent": "#000000",
+    "accent_foreground": "#FFFFFF",
+    "border": "rgba(0, 0, 0, 0.1)",
+    "glass_bg": "rgba(255, 255, 255, 0.7)"
+  },
+  "typography": {
+    "font_families": {
+      "heading": "Cabinet Grotesk, sans-serif",
+      "body": "Satoshi, Inter, sans-serif"
+    },
+    "hierarchy": {
+      "h1": "text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight",
+      "h2": "text-4xl sm:text-5xl font-bold tracking-tight leading-snug",
+      "h3": "text-2xl sm:text-3xl font-semibold tracking-tight",
+      "h4": "text-xl font-medium tracking-tight",
+      "body": "text-base lg:text-lg text-neutral-600 leading-relaxed",
+      "overline": "text-sm font-bold uppercase tracking-[0.2em] text-neutral-500"
+    }
+  },
+  "layout_and_spacing": {
+    "container": "max-w-7xl mx-auto px-6 lg:px-8",
+    "section_padding": "py-24 lg:py-32",
+    "generous_gap": "gap-8 lg:gap-16",
+    "bento_grid": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6",
+    "border_radius": {
+      "standard": "rounded-2xl",
+      "organic_1": "rounded-[2rem]",
+      "organic_2": "rounded-[4rem_1rem_4rem_1rem]",
+      "organic_3": "rounded-full"
+    }
+  },
+  "components": {
+    "button": "inline-flex items-center justify-center rounded-full bg-black text-white px-8 py-4 text-sm font-medium transition-transform hover:-translate-y-1 hover:shadow-lg",
+    "card": "bg-neutral-50 border border-black/5 rounded-3xl p-8 hover:shadow-xl transition-all duration-300",
+    "glass_header": "fixed top-0 w-full z-50 bg-white/70 backdrop-blur-xl border-b border-black/5",
+    "image_shape": "object-cover transition-transform duration-700 hover:scale-105"
+  },
+  "media": {
+    "logos": [
+      {
+        "category": "featured_in_forbes",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Forbes_logo.svg",
+        "description": "Forbes magazine logo black SVG"
+      },
+      {
+        "category": "featured_in_inc",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Inc._magazine_logo.svg",
+        "description": "Inc 5000 placeholder logo black SVG"
+      },
+      {
+        "category": "featured_in_huffpost",
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/75/HuffPost.svg",
+        "description": "Huffington Post logo black SVG"
+      }
+    ],
+    "images": [
+      {
+        "category": "hero_entrepreneur",
+        "url": "https://images.unsplash.com/photo-1557862921-37829c790f19?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzOTB8MHwxfHNlYXJjaHwzfHxlbnRyZXByZW5ldXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Nzg3OTY1Nzh8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Confident entrepreneur crossing arms, use in organic shape"
+      },
+      {
+        "category": "community_thriving",
+        "url": "https://images.unsplash.com/photo-1573164574511-73c773193279?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwyfHxkaXZlcnNlJTIwYnVzaW5lc3MlMjB0ZWFtfGVufDB8fHx8MTc3ODc5NjU3OHww&ixlib=rb-4.1.0&q=85",
+        "description": "Diverse business team inside room"
+      },
+      {
+        "category": "leadership_pillar",
+        "url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzOTB8MHwxfHNlYXJjaHwyfHxlbnRyZXByZW5ldXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Nzg3OTY1Nzh8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Woman leader in gray jacket"
+      },
+      {
+        "category": "strategize_pillar",
+        "url": "https://images.unsplash.com/photo-1653566031535-bcf33e1c2893?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwzfHxkaXZlcnNlJTIwYnVzaW5lc3MlMjB0ZWFtfGVufDB8fHx8MTc3ODc5NjU3OHww&ixlib=rb-4.1.0&q=85",
+        "description": "Group of people strategizing with laptops"
+      },
+      {
+        "category": "growth_pillar",
+        "url": "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzOTB8MHwxfHNlYXJjaHwxfHxlbnRyZXByZW5ldXIlMjBwb3J0cmFpdHxlbnwwfHx8fDE3Nzg3OTY1Nzh8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Man looking toward growth"
+      },
+      {
+        "category": "global_offices",
+        "url": "https://images.unsplash.com/photo-1573167507387-6b4b98cb7c13?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwzfHxnbG9iYWwlMjBidXNpbmVzcyUyMG1lZXRpbmd8ZW58MHx8fHwxNzc4Nzk2NTc4fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Global business meeting"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "title": "Funding ideas in diverse regions",
+      "content": "John Vekser is a global platform that sponsors entrepreneurs from disadvantaged backgrounds with big ideas who want to create a high impact in their communities and transform economies through business.",
+      "cta": "Empower your community",
+      "layout": "Two-column split. Left text, Right large organic shaped image. Generous padding."
+    },
+    {
+      "id": "community",
+      "title": "Turning disadvantaged communities into thriving economies.",
+      "cta": "Empower your initiative",
+      "layout": "Centered alignment, large heading, abstract shapes framing the text."
+    },
+    {
+      "id": "redefining",
+      "title": "Redefining businesses, enriching communities.",
+      "content": "We support entrepreneurs in various ways, including raising capital, creating co-founding teams, entering seed accelerators, gaining traction, building teams, creating products, switching from employee to entrepreneur, and more.",
+      "layout": "Grid bento box displaying these capabilities."
+    },
+    {
+      "id": "pillars",
+      "layout": "Three-column staggered grid for Leadership, Strategize, and Growth.",
+      "blocks": [
+        {
+          "title": "Leadership",
+          "content": "We're committed to cultivating robust leadership for the evolving business landscape. Through expert-led training, we develop leaders who can confidently inspire and guide.",
+          "cta": "Unite"
+        },
+        {
+          "title": "Strategize",
+          "content": "We offer platforms for founders to learn from experienced leaders. Our resources, like educational programs and advanced facilities, enable entrepreneurs to make significant decisions.",
+          "cta": "Discover"
+        },
+        {
+          "title": "Growth",
+          "content": "Our commitment extends beyond fostering leadership and aiding decision-making. We provide the funding and tech tools to boost growth, turning potential into measurable business success.",
+          "cta": "Elevate"
+        }
+      ]
+    },
+    {
+      "id": "global",
+      "title": "Fostering entrepreneurship globally.",
+      "content": "With a base in Florida, and offices in Los Angeles, Peru, India, Israel, and Portugal.",
+      "cta": "Join the impact revolution",
+      "layout": "Full width dark map aesthetic or minimalist text overlaying a blurred globe visual."
+    },
+    {
+      "id": "featured",
+      "title": "Featured in",
+      "layout": "Continuous horizontal marquee logo band."
+    },
+    {
+      "id": "footer",
+      "title": "Building entrepreneurial ecosystems.",
+      "content": "Vekser offers financial and educational support to underprivileged young entrepreneurs globally.",
+      "layout": "Massive typography with a call-to-action to end the page."
+    }
+  ],
+  "instructions_to_main_agent": [
+    "Ensure all images are wrapped in containers with organic border-radius classes, e.g., rounded-[4rem_1rem_4rem_1rem] or rounded-full. Avoid basic squares.",
+    "Use framer-motion for smooth entrance animations (fade up, slow scale) on scroll.",
+    "Implement the 'Featured In' section using a smooth marquee animation.",
+    "Keep backgrounds purely white or a very subtle off-white for bento cards.",
+    "Never use generic default fonts. Use Cabinet Grotesk for headings if possible (import via font-face or Google Fonts equivalent if needed like 'Space Grotesk' or just local styling), and Satoshi/Inter for body.",
+    "Add 'data-testid' to all buttons and links.",
+    "Use Lucide icons to augment the text naturally, sparingly."
+  ]
+}
