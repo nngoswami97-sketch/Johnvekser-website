@@ -321,9 +321,12 @@ const Mission = () => (
             point of this work.&rdquo;
           </p>
           <div className="mt-6 flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-black text-white inline-flex items-center justify-center font-display font-bold">
-              JD
-            </div>
+            <img
+              data-testid="founder-avatar"
+              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&q=85&w=200"
+              alt="John Daniel — Founder"
+              className="w-12 h-12 rounded-full object-cover border border-black/10"
+            />
             <div>
               <div className="text-[14px] font-semibold">John Daniel</div>
               <div className="text-[11px] uppercase tracking-[0.18em] text-neutral-500">
@@ -428,6 +431,66 @@ const Values = () => (
           );
         })}
       </div>
+    </Container>
+  </section>
+);
+
+/* ================================================================ */
+/*  Our Partners — text wordmarks (placeholder for real logos)      */
+/* ================================================================ */
+
+const OUR_PARTNERS = [
+  "Algorip",
+  "Renesent",
+  "Vekser",
+  "Trelegate",
+  "Clevertone",
+];
+
+const OurPartners = () => (
+  <section
+    id="our-partners"
+    data-testid="our-partners-section"
+    className="py-24 lg:py-32 bg-white border-t border-black/5"
+  >
+    <Container>
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        <div>
+          <Overline>Our Partners</Overline>
+          <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.05] balance text-[clamp(1.8rem,4.6vw,3.2rem)]">
+            Built alongside <Highlight>visionary brands.</Highlight>
+          </h2>
+        </div>
+        <p className="max-w-md text-[15px] text-neutral-500 leading-relaxed">
+          A small circle of operators we trust deeply — across product,
+          infrastructure, and capital.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-black/10 rounded-3xl overflow-hidden border border-black/10">
+        {OUR_PARTNERS.map((name, i) => (
+          <motion.div
+            key={name}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ delay: i * 0.08, duration: 0.6 }}
+            data-testid={`our-partner-${name.toLowerCase()}`}
+            className="group relative bg-white h-32 lg:h-40 flex items-center justify-center px-4 hover:bg-black transition-colors duration-500 cursor-default"
+          >
+            <span className="font-display font-extrabold tracking-[-0.04em] text-[22px] lg:text-[28px] text-black group-hover:text-white transition-colors">
+              {name}
+            </span>
+            <span className="absolute top-3 left-3 text-[9px] font-mono uppercase tracking-[0.22em] text-neutral-300 group-hover:text-white/40 transition-colors">
+              0{i + 1}
+            </span>
+          </motion.div>
+        ))}
+      </div>
+
+      <p className="mt-6 text-[12px] uppercase tracking-[0.22em] text-neutral-400 text-center">
+        Logos to follow · text placeholders for now
+      </p>
     </Container>
   </section>
 );
@@ -629,6 +692,7 @@ export default function About() {
         <GiveBack />
         <Mission />
         <Values />
+        <OurPartners />
         <Partners />
         <Story />
       </main>
