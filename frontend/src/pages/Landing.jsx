@@ -28,20 +28,9 @@ const Container = ({ children, className = "" }) => (
   <div className={`max-w-7xl mx-auto px-6 lg:px-10 ${className}`}>{children}</div>
 );
 
-/* Gold highlight with animated underline */
-const Highlight = ({ children, delay = 0.25 }) => (
-  <span className="font-serif-display italic relative inline-block">
-    <span className="relative z-10">{children}</span>
-    <motion.span
-      aria-hidden
-      initial={{ scaleX: 0, opacity: 0 }}
-      whileInView={{ scaleX: 1, opacity: 1 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ delay, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-      style={{ originX: 0 }}
-      className="absolute left-0 right-0 bottom-[0.08em] h-[0.18em] bg-[#B8965A]/25 rounded-full -z-0"
-    />
-  </span>
+/* Gold highlight — italic accent only, no underline */
+const Highlight = ({ children }) => (
+  <span className="font-serif-display italic">{children}</span>
 );
 
 /* Animated number counter — runs once when in view */
@@ -100,27 +89,28 @@ const Overline = ({ children, dark = false }) => (
   </span>
 );
 
-const PillButton = ({ children, testid, variant = "dark", icon = true }) => {
+const PillButton = ({ children, testid, variant = "gold", icon = true }) => {
   const base =
     "group relative inline-flex items-center gap-3 rounded-full px-9 py-5 text-[15px] font-semibold tracking-tight transition-all duration-300 hover:-translate-y-0.5 overflow-hidden";
   const styles =
-    variant === "dark"
-      ? "text-white shadow-[0_18px_45px_-15px_rgba(0,0,0,0.55)] hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)] bg-gradient-to-br from-neutral-800 via-black to-neutral-900 ring-1 ring-black/40"
+    variant === "gold"
+      ? "text-white shadow-[0_18px_45px_-15px_rgba(184,150,90,0.6)] hover:shadow-[0_25px_60px_-15px_rgba(184,150,90,0.75)] bg-gradient-to-br from-[#D4B57A] via-[#B8965A] to-[#8E6E3F] ring-1 ring-[#8E6E3F]/40"
       : "bg-white text-black border border-black/15 hover:border-black/60 shadow-sm";
   return (
     <button data-testid={testid} className={`${base} ${styles}`}>
-      {/* gold shimmer on hover */}
-      {variant === "dark" && (
-        <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+      {/* subtle inner shimmer */}
+      {variant === "gold" && (
+        <span
+          className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           style={{
             background:
-              "radial-gradient(120% 80% at 20% 0%, rgba(184,150,90,0.35), transparent 55%)",
+              "radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.45), transparent 55%)",
           }}
         />
       )}
       <span className="relative z-10">{children}</span>
       {icon && (
-        <span className="relative z-10 flex items-center justify-center w-7 h-7 rounded-full bg-white/15 group-hover:bg-[#B8965A] transition-colors duration-300">
+        <span className="relative z-10 flex items-center justify-center w-7 h-7 rounded-full bg-white/25 group-hover:bg-white transition-colors duration-300 group-hover:text-[#B8965A]">
           <ArrowUpRight className="w-4 h-4 transition-transform group-hover:rotate-45" />
         </span>
       )}
@@ -178,7 +168,7 @@ const Navbar = () => (
         <a
           data-testid="nav-apply-cta"
           href="#cta"
-          className="inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2.5 text-[13px] font-medium hover:-translate-y-0.5 transition-transform"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#D4B57A] via-[#B8965A] to-[#8E6E3F] text-white px-5 py-2.5 text-[13px] font-semibold shadow-[0_8px_24px_-8px_rgba(184,150,90,0.6)] hover:-translate-y-0.5 transition-transform"
         >
           Apply
           <ArrowRight className="w-3.5 h-3.5" />
@@ -626,7 +616,7 @@ const Pillars = () => (
               </p>
               <button
                 data-testid={`pillar-cta-${p.title.toLowerCase()}`}
-                className="mt-6 inline-flex items-center gap-2 text-[13px] font-medium tracking-tight border-b border-black/30 pb-0.5 hover:border-black transition-colors"
+                className="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold tracking-tight text-[#8E6E3F] border-b border-[#B8965A]/60 pb-0.5 hover:border-[#8E6E3F] hover:text-[#B8965A] transition-colors"
               >
                 {p.cta}
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -937,7 +927,7 @@ const FinalCTA = () => (
         <a
           data-testid="final-cta-secondary"
           href="#"
-          className="inline-flex items-center gap-3 rounded-full border-2 border-black px-9 py-5 text-[15px] font-semibold tracking-tight hover:bg-black hover:text-white transition-all duration-300 hover:-translate-y-0.5"
+          className="inline-flex items-center gap-3 rounded-full border-2 border-[#B8965A] text-[#8E6E3F] px-9 py-5 text-[15px] font-semibold tracking-tight hover:bg-[#B8965A] hover:text-white hover:border-[#B8965A] transition-all duration-300 hover:-translate-y-0.5"
         >
           Apply as a founder
           <ArrowRight className="w-4 h-4" />
@@ -1010,7 +1000,7 @@ const Footer = () => (
             <a
               data-testid="footer-cta-apply"
               href="#"
-              className="inline-flex items-center gap-2 rounded-full bg-white text-black px-5 py-2.5 text-[13px] font-medium hover:-translate-y-0.5 transition-transform"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#D4B57A] via-[#B8965A] to-[#8E6E3F] text-white px-5 py-2.5 text-[13px] font-semibold shadow-[0_8px_24px_-8px_rgba(184,150,90,0.6)] hover:-translate-y-0.5 transition-transform"
             >
               Apply for funding
               <ArrowUpRight className="w-3.5 h-3.5" />
