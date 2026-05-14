@@ -50,9 +50,9 @@ code {
         @apply bg-background text-foreground;
     }
     .font-display {
-        font-family: "Montserrat", "Inter", sans-serif;
+        font-family: "Manrope", "Inter", sans-serif;
         font-feature-settings: "ss01", "ss02";
-        letter-spacing: -0.02em;
+        letter-spacing: -0.035em;
     }
     .font-serif-display {
         font-family: "Playfair Display", "Instrument Serif", serif;
