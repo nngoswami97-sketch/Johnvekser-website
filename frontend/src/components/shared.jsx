@@ -2,12 +2,20 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   motion,
+  AnimatePresence,
   useScroll,
   useSpring,
   useInView,
   animate,
 } from "framer-motion";
-import { ArrowUpRight, ArrowRight, Sparkles, Globe2 } from "lucide-react";
+import {
+  ArrowUpRight,
+  ArrowRight,
+  Sparkles,
+  Globe2,
+  Menu,
+  X,
+} from "lucide-react";
 
 /* ============================================================== */
 /*  Shared primitives — used by every page                        */
@@ -241,77 +249,177 @@ export const FeaturePopup = ({
 
 export const Navbar = () => {
   const { pathname } = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const navItems = [
-    { label: "Home", to: "/", testid: "nav-home" },
     { label: "About", to: "/about", testid: "nav-about" },
     { label: "Mentorship", to: "/mentorship", testid: "nav-mentorship" },
     { label: "Donate", to: "/donate", testid: "nav-donate" },
     { label: "Contact", to: "/contact", testid: "nav-contact" },
   ];
+
+  // Lock body scroll when mobile menu open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   return (
-    <header
-      data-testid="site-navbar"
-      className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-white/70 border-b border-black/5"
-    >
-      <Container className="flex items-center justify-between h-16 lg:h-20">
-        <Link data-testid="nav-logo" to="/" className="flex items-center gap-2 group">
-          <span className="relative inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-white text-[15px] font-bold font-display">
-            JV
-            <span className="absolute -right-1 -top-1 w-2.5 h-2.5 rounded-full bg-black border-2 border-white" />
-          </span>
-          <span className="font-display font-bold tracking-tight text-[17px]">
-            John Vekser
-          </span>
-        </Link>
+    <>
+      <header
+        data-testid="site-navbar"
+        className="fixed top-0 inset-x-0 z-50 backdrop-blur-xl bg-white/70 border-b border-black/5"
+      >
+        <Container className="flex items-center justify-between h-16 lg:h-20">
+          <Link
+            data-testid="nav-logo"
+            to="/"
+            className="flex items-center gap-2 group"
+          >
+            <span className="relative inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-white text-[15px] font-bold font-display">
+              JV
+              <span className="absolute -right-1 -top-1 w-2.5 h-2.5 rounded-full bg-black border-2 border-white" />
+            </span>
+            <span className="font-display font-bold tracking-tight text-[17px]">
+              John Vekser
+            </span>
+          </Link>
 
-        <nav className="hidden md:flex items-center gap-9 text-[13px] font-medium text-neutral-700">
-          {navItems.map((n) => (
+          {/* Desktop nav */}
+          <nav className="hidden lg:flex items-center gap-9 text-[13px] font-medium text-neutral-700">
+            {navItems.map((n) => (
+              <Link
+                key={n.to}
+                to={n.to}
+                data-testid={n.testid}
+                className={`hover:text-black transition-colors ${
+                  pathname === n.to ? "text-black" : ""
+                }`}
+              >
+                {n.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right cluster */}
+          <div className="flex items-center gap-3">
             <Link
-              key={n.to}
-              to={n.to}
-              data-testid={n.testid}
-              className={`hover:text-black transition-colors ${
-                pathname === n.to ? "text-black" : ""
-              }`}
+              data-testid="nav-apply-cta"
+              to="/donate"
+              className="hidden sm:inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2.5 text-[13px] font-semibold hover:-translate-y-0.5 transition-transform shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)]"
             >
-              {n.label}
+              Donate
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
-          ))}
-          <a
-            href="#programs"
-            data-testid="nav-programs"
-            className="hover:text-black transition-colors"
-          >
-            Programs
-          </a>
-          <a
-            href="#press"
-            data-testid="nav-press"
-            className="hover:text-black transition-colors"
-          >
-            Press
-          </a>
-        </nav>
 
-        <div className="flex items-center gap-3">
-          <a
-            data-testid="nav-signin"
-            href="#"
-            className="hidden md:inline text-[13px] font-medium text-neutral-700 hover:text-black transition-colors"
+            {/* Hamburger — mobile + tablet */}
+            <button
+              data-testid="nav-hamburger"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+              className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-black/10 hover:bg-black hover:text-white transition-colors"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+          </div>
+        </Container>
+      </header>
+
+      {/* Mobile / tablet drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            data-testid="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[70] lg:hidden"
           >
-            Sign in
-          </a>
-          <a
-            data-testid="nav-apply-cta"
-            href="#cta"
-            className="inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2.5 text-[13px] font-semibold hover:-translate-y-0.5 transition-transform shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)]"
-          >
-            Apply
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
-        </div>
-      </Container>
-    </header>
+            {/* Overlay */}
+            <div
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              onClick={() => setMobileOpen(false)}
+            />
+            {/* Panel */}
+            <motion.aside
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute right-0 top-0 bottom-0 w-[88%] max-w-[420px] bg-white shadow-2xl flex flex-col"
+            >
+              <div className="flex items-center justify-between p-6 border-b border-black/5">
+                <Link
+                  to="/"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-2"
+                >
+                  <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-white text-[15px] font-bold font-display">
+                    JV
+                  </span>
+                  <span className="font-display font-bold tracking-tight text-[17px]">
+                    John Vekser
+                  </span>
+                </Link>
+                <button
+                  data-testid="mobile-menu-close"
+                  onClick={() => setMobileOpen(false)}
+                  aria-label="Close menu"
+                  className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-black/10 hover:bg-black hover:text-white transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <nav className="flex-1 overflow-y-auto p-6 flex flex-col gap-1">
+                <Link
+                  to="/"
+                  onClick={() => setMobileOpen(false)}
+                  data-testid="mobile-nav-home"
+                  className={`group flex items-center justify-between font-display font-extrabold tracking-tight text-[28px] py-3 border-b border-black/5 ${
+                    pathname === "/" ? "text-black" : "text-neutral-500 hover:text-black"
+                  } transition-colors`}
+                >
+                  Home
+                  <ArrowUpRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                </Link>
+                {navItems.map((n) => (
+                  <Link
+                    key={n.to}
+                    to={n.to}
+                    onClick={() => setMobileOpen(false)}
+                    data-testid={`mobile-${n.testid}`}
+                    className={`group flex items-center justify-between font-display font-extrabold tracking-tight text-[28px] py-3 border-b border-black/5 ${
+                      pathname === n.to
+                        ? "text-black"
+                        : "text-neutral-500 hover:text-black"
+                    } transition-colors`}
+                  >
+                    {n.label}
+                    <ArrowUpRight className="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                  </Link>
+                ))}
+              </nav>
+
+              <div className="p-6 border-t border-black/5">
+                <Link
+                  to="/donate"
+                  onClick={() => setMobileOpen(false)}
+                  data-testid="mobile-donate-cta"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-black text-white px-6 py-4 text-[14px] font-semibold hover:-translate-y-0.5 transition-transform"
+                >
+                  Donate now
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </motion.aside>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
@@ -319,106 +427,116 @@ export const Navbar = () => {
 /*  Site Footer — shared across all pages                         */
 /* ============================================================== */
 
+const PARTNER_LINKS = [
+  { name: "Vekser", href: "https://vekser.com" },
+  { name: "Clevertone", href: "https://clevertone.com" },
+  { name: "Renesent", href: "https://renesent.com" },
+  { name: "Trelegate", href: "https://trelegate.com" },
+];
+
 export const Footer = () => (
-  <footer data-testid="site-footer" className="bg-black text-white">
+  <footer
+    data-testid="site-footer"
+    className="bg-white text-black border-t border-black/10"
+  >
     <Container className="py-20">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
         <div className="md:col-span-5">
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white text-black text-[15px] font-bold font-display">
+            <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-black text-white text-[15px] font-bold font-display">
               JV
             </span>
             <span className="font-display font-bold tracking-tight text-[18px]">
               John Vekser
             </span>
           </div>
-          <p className="mt-6 max-w-sm text-[14px] text-white/60 leading-relaxed">
+          <p className="mt-6 max-w-sm text-[14px] text-neutral-600 leading-relaxed">
             A global platform funding ideas in diverse regions. Sponsoring
             entrepreneurs from disadvantaged backgrounds with big ideas.
           </p>
-          <div className="mt-8 flex items-center gap-2 text-[12px] text-white/50">
+          <div className="mt-8 flex items-center gap-2 text-[12px] text-neutral-500">
             <Globe2 className="w-4 h-4" /> 6 offices · 5 continents
           </div>
         </div>
 
-        <div className="md:col-span-2">
-          <div className="text-[11px] uppercase tracking-[0.22em] text-white/40 mb-4">
-            Platform
+        <div className="md:col-span-3">
+          <div className="text-[11px] uppercase tracking-[0.22em] text-neutral-500 mb-4">
+            Company
           </div>
           <ul className="space-y-3 text-[14px]">
             <li>
-              <Link to="/" className="text-white/80 hover:text-white">
+              <Link to="/" className="text-neutral-700 hover:text-black transition-colors">
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/about" className="text-white/80 hover:text-white">
+              <Link to="/about" className="text-neutral-700 hover:text-black transition-colors">
                 About
               </Link>
             </li>
             <li>
-              <Link to="/mentorship" className="text-white/80 hover:text-white">
-                Mentorship
-              </Link>
-            </li>
-            <li>
-              <Link to="/donate" className="text-white/80 hover:text-white">
-                Donate
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="text-white/80 hover:text-white">
+              <Link to="/contact" className="text-neutral-700 hover:text-black transition-colors">
                 Contact
               </Link>
             </li>
             <li>
-              <a href="#programs" className="text-white/80 hover:text-white">
-                Programs
-              </a>
+              <Link to="/mentorship" className="text-neutral-700 hover:text-black transition-colors">
+                Mentorship
+              </Link>
             </li>
             <li>
-              <a href="#press" className="text-white/80 hover:text-white">
-                Press
-              </a>
+              <Link to="/donate" className="text-neutral-700 hover:text-black transition-colors">
+                Donate
+              </Link>
             </li>
           </ul>
         </div>
 
         <div className="md:col-span-2">
-          <div className="text-[11px] uppercase tracking-[0.22em] text-white/40 mb-4">
-            Resources
+          <div className="text-[11px] uppercase tracking-[0.22em] text-neutral-500 mb-4">
+            Partners
           </div>
           <ul className="space-y-3 text-[14px]">
-            <li><a href="#" className="text-white/80 hover:text-white">Founder Guide</a></li>
-            <li><a href="#" className="text-white/80 hover:text-white">Funding</a></li>
-            <li><a href="#" className="text-white/80 hover:text-white">Accelerator</a></li>
-            <li><a href="#" className="text-white/80 hover:text-white">Mentors</a></li>
+            {PARTNER_LINKS.map((p) => (
+              <li key={p.name}>
+                <a
+                  data-testid={`footer-partner-${p.name.toLowerCase()}`}
+                  href={p.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-1.5 text-neutral-700 hover:text-black transition-colors"
+                >
+                  {p.name}
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
-        <div className="md:col-span-3">
-          <div className="text-[11px] uppercase tracking-[0.22em] text-white/40 mb-4">
+        <div className="md:col-span-2">
+          <div className="text-[11px] uppercase tracking-[0.22em] text-neutral-500 mb-4">
             Get in touch
           </div>
-          <p className="text-[14px] text-white/80">
-            hello@johnvekser.org
+          <p className="text-[14px] text-neutral-700">
+            Support@johnvekser.com
             <br />
-            Florida, USA · Global Offices
+            Fort Lauderdale, FL
           </p>
-          <div className="mt-6 flex gap-2">
-            <a
+          <div className="mt-6">
+            <Link
               data-testid="footer-cta-apply"
-              href="#"
-              className="inline-flex items-center gap-2 rounded-full bg-white text-black px-5 py-2.5 text-[13px] font-semibold hover:-translate-y-0.5 transition-transform"
+              to="/donate"
+              className="inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2.5 text-[13px] font-semibold hover:-translate-y-0.5 transition-transform"
             >
-              Apply for funding
+              Donate
               <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
 
-      <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-[12px] text-white/40">
+      <div className="mt-16 pt-8 border-t border-black/10 flex flex-col md:flex-row items-center justify-between gap-3 text-[12px] text-neutral-500">
         <span>© {new Date().getFullYear()} John Vekser. All rights reserved.</span>
         <span>Funding ideas in diverse regions.</span>
       </div>

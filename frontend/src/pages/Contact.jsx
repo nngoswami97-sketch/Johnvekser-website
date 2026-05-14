@@ -492,55 +492,47 @@ const WorldMap = () => (
         </div>
       </div>
 
-      {/* Country list grid */}
-      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-        {OFFICES.map((c) => (
-          <motion.div
-            key={c.code}
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.6 }}
-            data-testid={`office-card-${c.code.toLowerCase()}`}
-            className="bg-white border border-black/5 rounded-3xl p-6 hover:shadow-[0_24px_60px_-25px_rgba(0,0,0,0.2)] hover:-translate-y-1 transition-all duration-500"
-          >
-            <div className="flex items-center justify-between mb-5">
-              <div className="flex items-center gap-2">
-                <span className="text-lg">{c.flag}</span>
-                <span className="text-[10px] uppercase tracking-[0.22em] font-bold text-neutral-500">
-                  {c.code}
-                </span>
-              </div>
-              <span className="text-[11px] uppercase tracking-[0.2em] text-neutral-400">
-                {c.pins.length} office{c.pins.length > 1 ? "s" : ""}
-              </span>
-            </div>
-            <h3 className="font-display font-bold text-[22px] tracking-tight">
-              {c.country}
-            </h3>
-            <ul className="mt-4 space-y-3">
-              {c.pins.map((p) => (
-                <li key={p.city} className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-neutral-500 mt-0.5 shrink-0" />
-                  <div>
-                    <div className="text-[13px] font-semibold flex items-center gap-2">
-                      {p.city}
-                      {p.note === "Main Office" && (
-                        <span className="text-[9px] uppercase tracking-[0.18em] font-bold bg-black text-white px-2 py-0.5 rounded-full">
-                          Main
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-[12px] text-neutral-500 leading-relaxed">
-                      {p.addr}
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        ))}
-      </div>
+      {/* Country list grid removed per request */}
+    </Container>
+  </section>
+);
+
+/* ================================================================ */
+/*  Slide 3 — Empowering entrepreneurial dreams since 2022          */
+/* ================================================================ */
+
+const FinalStory = () => (
+  <section
+    id="story"
+    data-testid="contact-story-section"
+    className="relative py-32 lg:py-44 bg-white overflow-hidden"
+  >
+    <div className="absolute top-10 -left-32 w-96 h-96 rounded-full bg-neutral-100 blur-3xl" />
+    <div className="absolute bottom-0 -right-32 w-96 h-96 rounded-full bg-neutral-100 blur-3xl" />
+
+    <Container className="relative text-center">
+      <Overline>03 — Our Story</Overline>
+      <motion.h2
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        variants={fadeUp}
+        className="mt-8 font-display font-extrabold tracking-[-0.045em] leading-[0.98] balance text-[clamp(2.4rem,6.4vw,5.6rem)] max-w-5xl mx-auto"
+      >
+        Empowering <Highlight>entrepreneurial dreams</Highlight> since 2022.
+      </motion.h2>
+      <motion.p
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        variants={fadeUp}
+        custom={1}
+        className="mt-10 max-w-2xl mx-auto text-[17px] lg:text-[18px] leading-relaxed text-neutral-600"
+      >
+        We identify budding entrepreneurs in impoverished regions and provide
+        them with mentorship so they may develop their ideas into thriving
+        businesses.
+      </motion.p>
     </Container>
   </section>
 );
@@ -557,6 +549,7 @@ export default function Contact() {
       <main className="pt-0">
         <ContactForm />
         <WorldMap />
+        <FinalStory />
       </main>
       <Footer />
     </div>
