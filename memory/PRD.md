@@ -1,44 +1,67 @@
-# Johnvekser.org — Landing Page (PRD)
+# Johnvekser.org — Multi-Page Site (PRD)
 
 ## Original Problem Statement
-Rebuild the Johnvekser.org homepage as a single, long-scrolling landing page. Enterprise-grade, minimal, futuristic, clean, and trustworthy. White background, all-black accents, fonts inspired by assembly.com (Cabinet Grotesk + Instrument Serif italic accents), premium UI similar to aofund.org. Real human entrepreneur images from Unsplash. All images in organic non-square shapes. Featured-in section with Forbes, Inc. 5000, HuffPost. 10 narrative slides converted to scroll sections.
+Rebuild the Johnvekser.org website as a multi-page experience. Each page is a single, long-scroll narrative with 10 slides. Enterprise-grade, minimal, white background, black accents with gold italic accent words.
 
-## User Choices
-- Single long-scroll page (not carousel)
-- Static CTAs only (no backend form)
-- Logo images from web for "Featured in"
-- Accent color: black on white only
+## Pages (so far)
+- `/` — **Home** (10 slides covering the funding mission)
+- `/mentorship` — **Mentorship** (10 slides covering the mentor program)
 
-## Architecture
-- React 19 + craco + Tailwind + shadcn/ui (light theme)
-- Animation: framer-motion (entrance, scroll parallax, marquee)
-- Fonts (Fontshare): Cabinet Grotesk (display) + Satoshi (body); Instrument Serif italic for accents
-- No backend changes — fully static frontend
+## File Structure
+```
+/app/frontend/src/
+├── App.js                       ← routes (/, /mentorship)
+├── App.css                      ← minimal base styles
+├── index.css                    ← Tailwind + fonts (Manrope + Playfair Display) + custom utilities
+├── index.js
+├── pages/
+│   ├── Home.jsx                 ← entire homepage in one file (10 sections)
+│   └── Mentorship.jsx           ← entire mentorship page in one file (10 sections)
+└── components/
+    ├── shared.jsx               ← Navbar, Footer, PillButton, Highlight, FeaturePopup,
+    │                              ScrollProgress, StatCounter, Container, Overline,
+    │                              Outline button, fadeUp variants
+    └── ui/                      ← shadcn primitives (untouched)
+```
+
+## Design System (in shared.jsx + index.css)
+- **Fonts:** Manrope ExtraBold (display) + Montserrat (body) + Playfair Display italic (gold accents)
+- **Colors:** white background, black text, gold `#B8965A` italic accent
+- **Buttons:** black gradient pill (`PillButton`) + 2-px black outline secondary
+- **Motion:** framer-motion entrance fades, scroll progress bar, animated number counters, marquee press band, orbital city rings, pulsing dots
+
+## Sections in Home.jsx
+1. Hero — Funding ideas in diverse regions
+2. Community Mission — thriving economies
+3. Redefining (Bento) — 8 program cards
+4. Shape — tomorrow's economies (huge type)
+5–7. Pillars — Leadership, Strategize, Growth (with popups)
+8. Global — orbital map + offices
+9. Featured In — press marquee + quotes
+10. Final CTA — Building entrepreneurial ecosystems
+
+## Sections in Mentorship.jsx
+1. Hero — Shaping your story
+2. Evolve — Adapting to change
+3. Partners — sponsor logo marquee
+4. Inspiration — precision & simplicity (huge type)
+5. Foundation — Learn. Mentor. Dare! (Respect, Communication, Expectation, Trust)
+6. Featured In — press marquee
+7. Foundation — solve social problems
+8. Labs — break barriers
+9. Grants — $10,000 per founder (LGBTQ, women, India, Latin America)
+10. Record-breaking Success — final CTA
 
 ## What's been implemented (2025-12)
-- Glass nav with JV mark + smooth in-page anchors
-- Hero (Slide 1) — split layout, organic-shape image, floating "Cohort 07" card, trust stats
-- Community (Slide 2) — circular framed image with Lima / Tamil Nadu pin badges
-- Redefining (Slide 3) — 8-card bento grid with hover lift
-- Shape (Slide 4) — huge display type + interactive tag chips
-- Pillars (Slides 5–7) — Leadership / Strategize / Growth staggered 3-column
-- Global (Slide 8) — orbital city ring visualization + office cards
-- Featured (Slide 9) — animated marquee with Forbes / Inc / HuffPost / TechCrunch / CNN + 3 press quotes
-- Final CTA (Slide 10) — large display type + dual CTAs
-- Dark footer with site map + contact
-
-## File Map
-- `/app/frontend/src/App.js` — routes to Landing
-- `/app/frontend/src/pages/Landing.jsx` — all section components
-- `/app/frontend/src/index.css` — fonts, mesh/dot grid, marquee keyframes
-- `/app/frontend/public/index.html` — Fontshare + Google Fonts links
+- Refactored Landing.jsx into 3 cleanly separated files (Home, Mentorship, shared)
+- Added /mentorship route and cross-page navbar links
+- Built all 10 mentorship slides with the same design vocabulary (organic shapes, feature popups, gold italic accents, animated counters)
 
 ## Backlog (P1)
-- Functional "Apply for Funding" form (multistep + MongoDB submission)
-- Founder spotlight section with real bios + portrait gallery
-- Newsletter signup + Resend/Mailchimp integration
-- Add localization (EN / ES / PT) for global offices
+- Apply / Become a Mentor flow with backend form submission
+- Founder spotlight rotating section
+- Localization (EN / ES / PT)
 - Dedicated /press, /about, /apply routes
 
 ## Next Tasks
-- Awaiting user direction. Suggested: enable the apply form and pipe submissions to admin inbox.
+- Awaiting user direction.
