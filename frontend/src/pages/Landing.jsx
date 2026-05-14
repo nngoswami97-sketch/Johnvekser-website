@@ -9,6 +9,12 @@ import {
   TrendingUp,
   ArrowRight,
   Quote,
+  Rocket,
+  Briefcase,
+  DollarSign,
+  Award,
+  Zap,
+  Target,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -69,8 +75,90 @@ const ScrollProgress = () => {
     <motion.div
       data-testid="scroll-progress"
       style={{ scaleX, originX: 0 }}
-      className="fixed top-0 left-0 right-0 h-[2px] bg-[#B8965A] z-[60]"
+      className="fixed top-0 left-0 right-0 h-[2px] bg-black z-[60]"
     />
+  );
+};
+
+/* Floating feature popup — overlays images */
+const FeaturePopup = ({
+  icon: Icon = Sparkles,
+  eyebrow,
+  title,
+  testid,
+  position = "bottom-left",
+  delay = 0.5,
+  dark = false,
+  meter,
+  trend,
+}) => {
+  const positions = {
+    "bottom-left": "-left-4 lg:-left-10 bottom-10",
+    "bottom-right": "-right-4 lg:-right-10 bottom-12",
+    "top-right": "-right-4 lg:-right-10 top-10",
+    "top-left": "-left-4 lg:-left-10 top-12",
+    "mid-right": "-right-3 lg:-right-8 top-1/2 -translate-y-1/2",
+    "mid-left": "-left-3 lg:-left-8 top-1/2 -translate-y-1/2",
+  };
+  return (
+    <motion.div
+      data-testid={testid}
+      initial={{ opacity: 0, y: 14, scale: 0.94 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ delay, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className={`absolute ${positions[position]} ${
+        dark
+          ? "bg-black text-white border border-white/10"
+          : "bg-white border border-black/5 text-black"
+      } rounded-2xl shadow-[0_20px_45px_-15px_rgba(0,0,0,0.25)] p-3.5 w-[210px] z-20 backdrop-blur-sm`}
+    >
+      <div className="flex items-start gap-3">
+        <span
+          className={`shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-full ${
+            dark ? "bg-white text-black" : "bg-black text-white"
+          }`}
+        >
+          <Icon className="w-4 h-4" />
+        </span>
+        <div className="min-w-0">
+          {eyebrow && (
+            <div
+              className={`text-[10px] uppercase tracking-[0.18em] ${
+                dark ? "text-white/55" : "text-neutral-500"
+              }`}
+            >
+              {eyebrow}
+            </div>
+          )}
+          <div className="text-[13px] font-semibold leading-tight">
+            {title}
+          </div>
+          {trend && (
+            <div className="mt-1 text-[11px] font-medium text-emerald-600">
+              {trend}
+            </div>
+          )}
+        </div>
+      </div>
+      {typeof meter === "number" && (
+        <div className="mt-3">
+          <div className={`h-1 w-full rounded-full overflow-hidden ${dark ? "bg-white/15" : "bg-neutral-200"}`}>
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: `${meter}%` }}
+              viewport={{ once: true }}
+              transition={{ delay: delay + 0.4, duration: 1.2 }}
+              className={`h-full ${dark ? "bg-white" : "bg-black"}`}
+            />
+          </div>
+          <div className={`mt-1.5 text-[10px] flex justify-between ${dark ? "text-white/55" : "text-neutral-500"}`}>
+            <span>Progress</span>
+            <span>{meter}%</span>
+          </div>
+        </div>
+      )}
+    </motion.div>
   );
 };
 
@@ -89,28 +177,27 @@ const Overline = ({ children, dark = false }) => (
   </span>
 );
 
-const PillButton = ({ children, testid, variant = "gold", icon = true }) => {
+const PillButton = ({ children, testid, variant = "dark", icon = true }) => {
   const base =
     "group relative inline-flex items-center gap-3 rounded-full px-9 py-5 text-[15px] font-semibold tracking-tight transition-all duration-300 hover:-translate-y-0.5 overflow-hidden";
   const styles =
-    variant === "gold"
-      ? "text-white shadow-[0_18px_45px_-15px_rgba(184,150,90,0.6)] hover:shadow-[0_25px_60px_-15px_rgba(184,150,90,0.75)] bg-gradient-to-br from-[#D4B57A] via-[#B8965A] to-[#8E6E3F] ring-1 ring-[#8E6E3F]/40"
+    variant === "dark"
+      ? "text-white shadow-[0_18px_45px_-15px_rgba(0,0,0,0.55)] hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] bg-gradient-to-br from-neutral-800 via-black to-neutral-900 ring-1 ring-black/40"
       : "bg-white text-black border border-black/15 hover:border-black/60 shadow-sm";
   return (
     <button data-testid={testid} className={`${base} ${styles}`}>
-      {/* subtle inner shimmer */}
-      {variant === "gold" && (
+      {variant === "dark" && (
         <span
           className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           style={{
             background:
-              "radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.45), transparent 55%)",
+              "radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.12), transparent 55%)",
           }}
         />
       )}
       <span className="relative z-10">{children}</span>
       {icon && (
-        <span className="relative z-10 flex items-center justify-center w-7 h-7 rounded-full bg-white/25 group-hover:bg-white transition-colors duration-300 group-hover:text-[#B8965A]">
+        <span className="relative z-10 flex items-center justify-center w-7 h-7 rounded-full bg-white/15 group-hover:bg-white group-hover:text-black transition-colors duration-300">
           <ArrowUpRight className="w-4 h-4 transition-transform group-hover:rotate-45" />
         </span>
       )}
@@ -168,7 +255,7 @@ const Navbar = () => (
         <a
           data-testid="nav-apply-cta"
           href="#cta"
-          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#D4B57A] via-[#B8965A] to-[#8E6E3F] text-white px-5 py-2.5 text-[13px] font-semibold shadow-[0_8px_24px_-8px_rgba(184,150,90,0.6)] hover:-translate-y-0.5 transition-transform"
+          className="inline-flex items-center gap-2 rounded-full bg-black text-white px-5 py-2.5 text-[13px] font-semibold hover:-translate-y-0.5 transition-transform shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)]"
         >
           Apply
           <ArrowRight className="w-3.5 h-3.5" />
@@ -269,42 +356,30 @@ const Hero = () => {
 
             <img
               data-testid="hero-image"
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"
-              alt="Confident entrepreneur"
+              src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"
+              alt="Founder building product at workspace"
               className="w-full h-full object-cover rounded-[4rem_1rem_4rem_1rem] shadow-[0_25px_80px_-30px_rgba(0,0,0,0.4)]"
             />
 
-            {/* Floating card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="absolute -left-4 lg:-left-12 bottom-10 bg-white border border-black/5 rounded-2xl shadow-xl p-4 w-56"
-            >
-              <div className="flex items-center gap-3">
-                <span className="w-9 h-9 rounded-full bg-black text-white inline-flex items-center justify-center">
-                  <Sparkles className="w-4 h-4" />
-                </span>
-                <div>
-                  <div className="text-[11px] uppercase tracking-[0.18em] text-neutral-500">
-                    Cohort 07
-                  </div>
-                  <div className="text-[13px] font-semibold">Now accepting</div>
-                </div>
-              </div>
-              <div className="mt-3 h-1 w-full bg-neutral-200 rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "68%" }}
-                  transition={{ delay: 1, duration: 1.2 }}
-                  className="h-full bg-black"
-                />
-              </div>
-              <div className="mt-2 text-[11px] text-neutral-500 flex justify-between">
-                <span>Applications open</span>
-                <span>68%</span>
-              </div>
-            </motion.div>
+            <FeaturePopup
+              testid="hero-popup-cohort"
+              icon={Sparkles}
+              eyebrow="Cohort 07"
+              title="Now accepting"
+              position="bottom-left"
+              meter={68}
+              delay={0.55}
+            />
+
+            <FeaturePopup
+              testid="hero-popup-mentor"
+              icon={Users}
+              eyebrow="Mentor matched"
+              title="14 active mentors"
+              position="top-right"
+              delay={0.85}
+              dark
+            />
           </div>
         </motion.div>
       </Container>
@@ -349,8 +424,8 @@ const Community = () => (
           <div className="absolute inset-0 rounded-full overflow-hidden">
             <img
               data-testid="community-image"
-              src="https://images.unsplash.com/photo-1573164574511-73c773193279?crop=entropy&cs=srgb&fm=jpg&q=85&w=1000"
-              alt="Diverse team building a community business"
+              src="https://images.unsplash.com/photo-1543269865-cbf427effbad?crop=entropy&cs=srgb&fm=jpg&q=85&w=1000"
+              alt="Diverse founders collaborating on community business"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
             />
           </div>
@@ -362,6 +437,24 @@ const Community = () => (
             <span className="inline-block w-2 h-2 rounded-full bg-black mr-2 align-middle" />
             Tamil Nadu · India
           </div>
+
+          <FeaturePopup
+            testid="community-popup-funding"
+            icon={DollarSign}
+            eyebrow="Seed deployed"
+            title="$50K · 12wks"
+            position="mid-right"
+            delay={0.4}
+          />
+          <FeaturePopup
+            testid="community-popup-impact"
+            icon={Rocket}
+            eyebrow="Community impact"
+            title="2,400+ jobs created"
+            position="bottom-left"
+            delay={0.7}
+            dark
+          />
         </div>
       </motion.div>
 
@@ -538,8 +631,11 @@ const PILLARS = [
     body:
       "We're committed to cultivating robust leadership for the evolving business landscape. Through expert-led training, we develop leaders who can confidently inspire and guide.",
     img:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+    imgAlt: "Mentor leading a strategy session with founders",
     shape: "rounded-[4rem_1rem_4rem_1rem]",
+    popup: { icon: Award, eyebrow: "Live cohort", title: "Mentor + 12 founders", position: "bottom-left", dark: false },
+    popup2: { icon: Sparkles, eyebrow: "Workshop", title: "Weekly · Tuesdays", position: "top-right", dark: true },
   },
   {
     n: "06",
@@ -549,8 +645,11 @@ const PILLARS = [
     body:
       "We offer platforms for founders to learn from experienced leaders. Our resources, like educational programs and advanced facilities, enable entrepreneurs to make significant decisions.",
     img:
-      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+    imgAlt: "Founders strategizing around a laptop",
     shape: "rounded-[1rem_4rem_1rem_4rem]",
+    popup: { icon: Target, eyebrow: "Roadmap", title: "Q1 targets locked", position: "bottom-left", dark: false },
+    popup2: { icon: Briefcase, eyebrow: "Resources", title: "47 playbooks open", position: "top-right", dark: true },
   },
   {
     n: "07",
@@ -560,8 +659,11 @@ const PILLARS = [
     body:
       "Our commitment extends beyond fostering leadership and aiding decision-making. We provide the funding and tech tools to boost growth, turning potential into measurable business success.",
     img:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+      "https://images.unsplash.com/photo-1559136555-9303baea8ebd?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+    imgAlt: "Founder analysing growth metrics",
     shape: "rounded-full",
+    popup: { icon: TrendingUp, eyebrow: "MRR", title: "$48K · last 30d", trend: "+247% vs Q3", position: "bottom-left", dark: false },
+    popup2: { icon: Zap, eyebrow: "Pipeline", title: "23 warm leads", position: "top-right", dark: true },
   },
 ];
 
@@ -595,11 +697,32 @@ const Pillars = () => (
                 i === 1 ? "lg:translate-y-10" : ""
               } ${i === 2 ? "lg:translate-y-4" : ""}`}
             >
-              <div className="relative aspect-[4/5] mb-6 overflow-hidden bg-neutral-100">
-                <img
-                  src={p.img}
-                  alt={p.title}
-                  className={`w-full h-full object-cover ${p.shape} transition-transform duration-700 group-hover:scale-105`}
+              <div className="relative aspect-[4/5] mb-6 overflow-visible">
+                <div className={`relative w-full h-full overflow-hidden bg-neutral-100 ${p.shape}`}>
+                  <img
+                    src={p.img}
+                    alt={p.imgAlt || p.title}
+                    className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105`}
+                  />
+                </div>
+                <FeaturePopup
+                  testid={`pillar-popup-${p.title.toLowerCase()}-a`}
+                  icon={p.popup.icon}
+                  eyebrow={p.popup.eyebrow}
+                  title={p.popup.title}
+                  trend={p.popup.trend}
+                  position={p.popup.position}
+                  dark={p.popup.dark}
+                  delay={0.35 + i * 0.05}
+                />
+                <FeaturePopup
+                  testid={`pillar-popup-${p.title.toLowerCase()}-b`}
+                  icon={p.popup2.icon}
+                  eyebrow={p.popup2.eyebrow}
+                  title={p.popup2.title}
+                  position={p.popup2.position}
+                  dark={p.popup2.dark}
+                  delay={0.6 + i * 0.05}
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -616,7 +739,7 @@ const Pillars = () => (
               </p>
               <button
                 data-testid={`pillar-cta-${p.title.toLowerCase()}`}
-                className="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold tracking-tight text-[#8E6E3F] border-b border-[#B8965A]/60 pb-0.5 hover:border-[#8E6E3F] hover:text-[#B8965A] transition-colors"
+                className="mt-6 inline-flex items-center gap-2 text-[13px] font-semibold tracking-tight border-b border-black/30 pb-0.5 hover:border-black transition-colors"
               >
                 {p.cta}
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -927,7 +1050,7 @@ const FinalCTA = () => (
         <a
           data-testid="final-cta-secondary"
           href="#"
-          className="inline-flex items-center gap-3 rounded-full border-2 border-[#B8965A] text-[#8E6E3F] px-9 py-5 text-[15px] font-semibold tracking-tight hover:bg-[#B8965A] hover:text-white hover:border-[#B8965A] transition-all duration-300 hover:-translate-y-0.5"
+          className="inline-flex items-center gap-3 rounded-full border-2 border-black px-9 py-5 text-[15px] font-semibold tracking-tight hover:bg-black hover:text-white transition-all duration-300 hover:-translate-y-0.5"
         >
           Apply as a founder
           <ArrowRight className="w-4 h-4" />
@@ -1000,7 +1123,7 @@ const Footer = () => (
             <a
               data-testid="footer-cta-apply"
               href="#"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-[#D4B57A] via-[#B8965A] to-[#8E6E3F] text-white px-5 py-2.5 text-[13px] font-semibold shadow-[0_8px_24px_-8px_rgba(184,150,90,0.6)] hover:-translate-y-0.5 transition-transform"
+              className="inline-flex items-center gap-2 rounded-full bg-white text-black px-5 py-2.5 text-[13px] font-semibold hover:-translate-y-0.5 transition-transform"
             >
               Apply for funding
               <ArrowUpRight className="w-3.5 h-3.5" />
