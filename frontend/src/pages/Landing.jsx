@@ -102,17 +102,26 @@ const Overline = ({ children, dark = false }) => (
 
 const PillButton = ({ children, testid, variant = "dark", icon = true }) => {
   const base =
-    "group inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-[13px] font-medium tracking-tight transition-all duration-300 hover:-translate-y-0.5";
+    "group relative inline-flex items-center gap-3 rounded-full px-9 py-5 text-[15px] font-semibold tracking-tight transition-all duration-300 hover:-translate-y-0.5 overflow-hidden";
   const styles =
     variant === "dark"
-      ? "bg-black text-white hover:shadow-[0_18px_50px_-12px_rgba(0,0,0,0.45)]"
-      : "bg-white text-black border border-black/10 hover:border-black/40";
+      ? "text-white shadow-[0_18px_45px_-15px_rgba(0,0,0,0.55)] hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.65)] bg-gradient-to-br from-neutral-800 via-black to-neutral-900 ring-1 ring-black/40"
+      : "bg-white text-black border border-black/15 hover:border-black/60 shadow-sm";
   return (
     <button data-testid={testid} className={`${base} ${styles}`}>
-      <span>{children}</span>
+      {/* gold shimmer on hover */}
+      {variant === "dark" && (
+        <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            background:
+              "radial-gradient(120% 80% at 20% 0%, rgba(184,150,90,0.35), transparent 55%)",
+          }}
+        />
+      )}
+      <span className="relative z-10">{children}</span>
       {icon && (
-        <span className="flex items-center justify-center w-6 h-6 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors">
-          <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:rotate-45" />
+        <span className="relative z-10 flex items-center justify-center w-7 h-7 rounded-full bg-white/15 group-hover:bg-[#B8965A] transition-colors duration-300">
+          <ArrowUpRight className="w-4 h-4 transition-transform group-hover:rotate-45" />
         </span>
       )}
     </button>
@@ -928,10 +937,10 @@ const FinalCTA = () => (
         <a
           data-testid="final-cta-secondary"
           href="#"
-          className="inline-flex items-center gap-2 rounded-full border border-black/15 px-7 py-3.5 text-[13px] font-medium tracking-tight hover:border-black transition-colors"
+          className="inline-flex items-center gap-3 rounded-full border-2 border-black px-9 py-5 text-[15px] font-semibold tracking-tight hover:bg-black hover:text-white transition-all duration-300 hover:-translate-y-0.5"
         >
           Apply as a founder
-          <ArrowRight className="w-3.5 h-3.5" />
+          <ArrowRight className="w-4 h-4" />
         </a>
       </motion.div>
     </Container>
