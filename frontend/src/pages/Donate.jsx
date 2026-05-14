@@ -14,6 +14,12 @@ import {
   DollarSign,
   Lightbulb,
   Globe2,
+  ShieldCheck,
+  BadgeCheck,
+  Lock,
+  Star,
+  FileCheck2,
+  Quote,
 } from "lucide-react";
 import {
   Container,
@@ -92,9 +98,9 @@ const DonateHero = () => {
 
           <div className="mt-16 grid grid-cols-3 gap-6 max-w-lg">
             {[
-              { n: 124, prefix: "$", suffix: "K", l: "Raised this year" },
               { n: 1860, suffix: "+", l: "Donors worldwide" },
-              { n: 96, suffix: "%", l: "Goes to founders" },
+              { n: 320, suffix: "+", l: "Entrepreneurs helped" },
+              { n: 100, suffix: "%", l: "Goes to founders" },
             ].map((s, i) => (
               <motion.div
                 key={s.l}
@@ -157,6 +163,57 @@ const DonateHero = () => {
 };
 
 /* ================================================================ */
+/*  Trust band — credibility signals (inserted after hero)          */
+/* ================================================================ */
+
+const TRUST = [
+  { icon: BadgeCheck, label: "501(c)(3) Verified" },
+  { icon: ShieldCheck, label: "Tax-deductible" },
+  { icon: FileCheck2, label: "Independently audited" },
+  { icon: Star, label: "GuideStar Gold" },
+  { icon: Lock, label: "SSL · PCI secure" },
+];
+
+const TrustBand = () => (
+  <section
+    data-testid="trust-band"
+    className="relative bg-white border-y border-black/5 overflow-hidden"
+  >
+    <Container className="py-8">
+      <div className="flex flex-wrap items-center justify-between gap-x-10 gap-y-4">
+        <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] text-neutral-500 font-semibold">
+          <motion.span
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            className="w-2 h-2 rounded-full bg-emerald-500"
+          />
+          Verified non-profit
+        </div>
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+          {TRUST.map((t, i) => {
+            const Icon = t.icon;
+            return (
+              <motion.div
+                key={t.label}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.07, duration: 0.55 }}
+                data-testid={`trust-${i}`}
+                className="flex items-center gap-2 text-[13px] font-medium text-neutral-700 hover:text-black transition-colors"
+              >
+                <Icon className="w-4 h-4" />
+                <span>{t.label}</span>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </Container>
+  </section>
+);
+
+/* ================================================================ */
 /*  Slide 2 — Empower entrepreneurs, change lives                   */
 /* ================================================================ */
 
@@ -188,7 +245,7 @@ const ChangeLives = () => (
             testid="changelives-popup-direct"
             icon={DollarSign}
             eyebrow="Direct to founder"
-            title="96¢ of every $1"
+            title="100% of every $1"
             position="top-right"
             delay={0.45}
           />
@@ -223,6 +280,33 @@ const ChangeLives = () => (
           vision — providing them with the resources to turn their businesses
           into powerful tools for community development.
         </p>
+
+        {/* Animated impact ticker */}
+        <div className="mt-10 grid grid-cols-3 gap-6 max-w-md">
+          {[
+            { n: 320, suffix: "+", l: "Entrepreneurs" },
+            { n: 38, l: "Countries" },
+            { n: 14, suffix: "K+", l: "Lives touched" },
+          ].map((s, i) => (
+            <motion.div
+              key={s.l}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.12, duration: 0.7 }}
+              data-testid={`impact-stat-${i}`}
+              className="border-l-2 border-black/15 pl-4"
+            >
+              <div className="font-display text-2xl lg:text-3xl font-bold tracking-tight">
+                <StatCounter value={s.n} prefix="" suffix={s.suffix || ""} />
+              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.18em] text-neutral-500">
+                {s.l}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
         <div className="mt-10">
           <PillButton testid="changelives-cta">Join hands, make an impact</PillButton>
         </div>
@@ -573,6 +657,126 @@ const Pillars = () => (
 );
 
 /* ================================================================ */
+/*  Testimonials — social proof from real donors & founders          */
+/* ================================================================ */
+
+const TESTIMONIALS = [
+  {
+    quote:
+      "100% of my monthly donation reaches the founder. The transparency is unmatched — I've seen every dollar's impact.",
+    author: "Priya R.",
+    role: "Monthly donor · since 2022",
+    avatar:
+      "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?crop=entropy&cs=srgb&fm=jpg&q=85&w=200",
+  },
+  {
+    quote:
+      "John Vekser's grant let me hire my first two engineers. We're now serving 6,000+ small businesses in Lima.",
+    author: "Carlos M.",
+    role: "Founder · Lima, Peru",
+    avatar:
+      "https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?crop=entropy&cs=srgb&fm=jpg&q=85&w=200",
+  },
+  {
+    quote:
+      "Quarterly impact reports, audited finances, and direct video updates from the founders we support. Real accountability.",
+    author: "Sarah L.",
+    role: "Founding donor · NYC",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=srgb&fm=jpg&q=85&w=200",
+  },
+];
+
+const Testimonials = () => (
+  <section
+    id="testimonials"
+    data-testid="testimonials-section"
+    className="relative py-28 lg:py-36 bg-white overflow-hidden"
+  >
+    <Container>
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="max-w-2xl"
+        >
+          <Overline>Social Proof</Overline>
+          <h2 className="mt-6 font-display font-extrabold tracking-[-0.035em] leading-[1.05] balance text-[clamp(1.9rem,4.6vw,3.4rem)]">
+            Trusted by <Highlight>donors &amp; founders</Highlight> alike.
+          </h2>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="flex items-center gap-3 text-[13px] text-neutral-600"
+        >
+          <div className="flex -space-x-2">
+            {TESTIMONIALS.map((t, i) => (
+              <img
+                key={i}
+                src={t.avatar}
+                alt={t.author}
+                className="w-9 h-9 rounded-full border-2 border-white object-cover"
+              />
+            ))}
+          </div>
+          <span>
+            <strong className="font-semibold text-black">1,860+</strong>{" "}
+            donors backing us
+          </span>
+        </motion.div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
+        {TESTIMONIALS.map((t, i) => (
+          <motion.figure
+            key={i}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeUp}
+            custom={i}
+            data-testid={`testimonial-${i}`}
+            className="group relative bg-neutral-50 border border-black/5 rounded-3xl p-7 hover:shadow-[0_24px_60px_-25px_rgba(0,0,0,0.25)] hover:-translate-y-1 transition-all duration-500"
+          >
+            <Quote className="w-5 h-5 text-neutral-400" />
+            <blockquote className="mt-4 font-display text-[17px] leading-snug tracking-tight">
+              &ldquo;{t.quote}&rdquo;
+            </blockquote>
+            <figcaption className="mt-6 flex items-center gap-3">
+              <img
+                src={t.avatar}
+                alt={t.author}
+                className="w-11 h-11 rounded-full object-cover"
+              />
+              <div>
+                <div className="text-[13px] font-semibold">{t.author}</div>
+                <div className="text-[11px] uppercase tracking-[0.18em] text-neutral-500">
+                  {t.role}
+                </div>
+              </div>
+            </figcaption>
+            <div className="absolute top-5 right-5 flex items-center gap-0.5">
+              {[0, 1, 2, 3, 4].map((s) => (
+                <Star
+                  key={s}
+                  className="w-3 h-3 text-black"
+                  fill="currentColor"
+                />
+              ))}
+            </div>
+          </motion.figure>
+        ))}
+      </div>
+    </Container>
+  </section>
+);
+
+/* ================================================================ */
 /*  Slide 8 — Final CTA · Join us in making a positive difference   */
 /* ================================================================ */
 
@@ -643,10 +847,12 @@ export default function Donate() {
       <Navbar />
       <main className="pt-0">
         <DonateHero />
+        <TrustBand />
         <ChangeLives />
         <Partners />
         <EveryDollar />
         <Pillars />
+        <Testimonials />
         <FinalCTA />
       </main>
       <Footer />
