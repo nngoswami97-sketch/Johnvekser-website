@@ -36,46 +36,70 @@ import {
 } from "../components/shared";
 
 /* ================================================================ */
-/*  Slide 1 — Hero · Shaping your story                             */
+/*  Slide 1 — Hero · Shaping your story (full-bleed image bg)       */
 /* ================================================================ */
 
 const MentorHero = () => {
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 600], [0, -60]);
+  const y = useTransform(scrollY, [0, 600], [0, 80]);
   return (
     <section
       id="top"
       data-testid="mentor-hero-section"
-      className="relative pt-32 lg:pt-40 pb-24 lg:pb-32 overflow-hidden mesh-soft"
+      className="relative min-h-[100vh] flex items-end overflow-hidden text-white"
     >
-      <Container className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      {/* Full-bleed background image */}
+      <motion.div style={{ y }} className="absolute inset-0 z-0">
+        <img
+          data-testid="mentor-hero-image"
+          src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?crop=entropy&cs=srgb&fm=jpg&q=90&w=2400"
+          alt="Mentor coaching a founder one on one"
+          className="w-full h-full object-cover scale-110"
+        />
+        {/* Layered overlays for legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+      </motion.div>
+
+      <Container className="relative z-10 w-full pt-40 pb-20 lg:pb-28">
         <motion.div
           initial="hidden"
           animate="show"
           variants={fadeUp}
-          className="lg:col-span-7"
+          className="max-w-3xl"
         >
-          <Overline>Mentorship Program</Overline>
-          <h1 className="mt-6 font-display font-extrabold tracking-[-0.04em] leading-[0.98] balance text-[clamp(2.4rem,6.2vw,5.2rem)]">
+          <Overline dark>Mentorship Program</Overline>
+          <h1 className="mt-6 font-display font-extrabold tracking-[-0.04em] leading-[0.98] balance text-[clamp(2.6rem,6.8vw,5.8rem)]">
             Shaping <Highlight>your story.</Highlight>
           </h1>
-          <p className="mt-7 max-w-xl text-[17px] lg:text-[18px] leading-relaxed text-neutral-600 font-body">
+          <p className="mt-7 max-w-xl text-[17px] lg:text-[18px] leading-relaxed text-white/80 font-body">
             Our mentorship program opens doors to a realm of knowledge sharing,
             growth-oriented guidance, and meaningful connections. Your gateway
             to invaluable learning, connection, and personal development.
           </p>
+
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <PillButton testid="mentor-hero-cta">Start your journey</PillButton>
+            <a
+              data-testid="mentor-hero-cta"
+              href="#values"
+              className="group relative inline-flex items-center gap-3 rounded-full px-9 py-5 text-[15px] font-semibold tracking-tight transition-all duration-300 hover:-translate-y-0.5 overflow-hidden bg-white text-black shadow-[0_18px_45px_-15px_rgba(255,255,255,0.4)]"
+            >
+              <span>Start your journey</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-black text-white">
+                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:rotate-45" />
+              </span>
+            </a>
             <a
               data-testid="mentor-hero-secondary"
               href="#values"
-              className="text-[13px] font-medium tracking-tight inline-flex items-center gap-2 text-neutral-700 hover:text-black border-b border-transparent hover:border-black transition-all py-1"
+              className="text-[13px] font-medium tracking-tight inline-flex items-center gap-2 text-white/90 hover:text-white border-b border-white/30 hover:border-white transition-all py-1"
             >
               Meet our mentors
               <ArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>
-          <div className="mt-14 grid grid-cols-3 gap-6 max-w-md">
+
+          <div className="mt-16 grid grid-cols-3 gap-6 max-w-lg">
             {[
               { n: 240, suffix: "+", l: "Mentors active" },
               { n: 4500, suffix: "+", l: "1:1 sessions" },
@@ -92,7 +116,7 @@ const MentorHero = () => {
                 <div className="font-display text-3xl lg:text-4xl font-bold tracking-tight">
                   <StatCounter value={s.n} prefix="" suffix={s.suffix || ""} />
                 </div>
-                <div className="mt-1 text-[11px] uppercase tracking-[0.18em] text-neutral-500">
+                <div className="mt-1 text-[11px] uppercase tracking-[0.18em] text-white/55">
                   {s.l}
                 </div>
               </motion.div>
@@ -100,53 +124,41 @@ const MentorHero = () => {
           </div>
         </motion.div>
 
-        <motion.div
-          style={{ y }}
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className="lg:col-span-5 relative"
-        >
-          <div className="relative aspect-[4/5] w-full max-w-md mx-auto">
-            <div className="absolute -inset-4 rounded-[1rem_4rem_1rem_4rem] bg-neutral-100 -z-10 blob-float" />
-            <div className="absolute -top-8 -left-6 w-24 h-24 rounded-full border border-black/30 hidden md:block" />
-            <div className="absolute -bottom-6 -right-6 w-28 h-28 rounded-full bg-black hidden md:block" />
-            <img
-              data-testid="mentor-hero-image"
-              src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?crop=entropy&cs=srgb&fm=jpg&q=85&w=1200"
-              alt="Mentor coaching a founder one on one"
-              className="w-full h-full object-cover rounded-[1rem_4rem_1rem_4rem] shadow-[0_25px_80px_-30px_rgba(0,0,0,0.4)]"
-            />
-            <FeaturePopup
-              testid="mentor-popup-session"
-              icon={MessageCircle}
-              eyebrow="Live session"
-              title="1:1 · 45 min"
-              position="top-right"
-              delay={0.55}
-            />
-            <FeaturePopup
-              testid="mentor-popup-rating"
-              icon={Award}
-              eyebrow="Founder rating"
-              title="4.9 ★ avg."
-              trend="+126 reviews"
-              position="bottom-left"
-              delay={0.85}
-              dark
-            />
-          </div>
-        </motion.div>
-      </Container>
-
-      <Container className="mt-24">
-        <div className="h-line" />
-        <div className="mt-6 flex items-center justify-between text-[11px] uppercase tracking-[0.22em] text-neutral-500">
-          <span>Learn</span>
-          <span>Mentor · Communication · Trust · Respect</span>
-          <span className="hidden md:inline">Scroll ↓</span>
+        {/* Floating popups — pinned to right side of hero */}
+        <div className="hidden lg:block absolute right-10 top-1/3 w-[240px]">
+          <FeaturePopup
+            testid="mentor-popup-session"
+            icon={MessageCircle}
+            eyebrow="Live session"
+            title="1:1 · 45 min"
+            position="bottom-left"
+            delay={0.55}
+          />
+        </div>
+        <div className="hidden lg:block absolute right-10 bottom-32 w-[240px]">
+          <FeaturePopup
+            testid="mentor-popup-rating"
+            icon={Award}
+            eyebrow="Founder rating"
+            title="4.9 ★ avg."
+            trend="+126 reviews"
+            position="bottom-left"
+            delay={0.85}
+            dark
+          />
         </div>
       </Container>
+
+      {/* Bottom marker */}
+      <div className="absolute z-10 bottom-6 left-0 right-0 px-6 lg:px-10">
+        <div className="max-w-7xl mx-auto flex items-center justify-between text-[11px] uppercase tracking-[0.22em] text-white/55">
+          <span>Learn</span>
+          <span className="hidden md:inline">
+            Mentor · Communication · Trust · Respect
+          </span>
+          <span>Scroll ↓</span>
+        </div>
+      </div>
     </section>
   );
 };
@@ -609,10 +621,10 @@ const Grants = () => (
   <section
     id="grants"
     data-testid="grants-section"
-    className="relative py-28 lg:py-40 bg-black text-white overflow-hidden"
+    className="relative py-28 lg:py-40 bg-white overflow-hidden"
   >
-    <div className="absolute top-20 -left-20 w-72 h-72 rounded-full bg-white/5 blur-3xl" />
-    <div className="absolute bottom-10 -right-32 w-96 h-96 rounded-full bg-white/5 blur-3xl" />
+    <div className="absolute top-20 -left-20 w-72 h-72 rounded-full bg-neutral-100 blur-3xl" />
+    <div className="absolute bottom-10 -right-32 w-96 h-96 rounded-full bg-neutral-100 blur-3xl" />
 
     <Container className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
       <motion.div
@@ -622,16 +634,16 @@ const Grants = () => (
         variants={fadeUp}
         className="lg:col-span-7"
       >
-        <Overline dark>09 — Grants</Overline>
+        <Overline>09 — Grants</Overline>
         <div className="mt-6 flex items-baseline gap-4 flex-wrap">
           <span className="font-display font-extrabold tracking-[-0.04em] text-[clamp(4rem,12vw,9rem)] leading-none">
             <StatCounter value={10000} prefix="$" />
           </span>
-          <span className="font-serif-display italic text-3xl lg:text-4xl text-white/80">
+          <span className="font-serif-display italic text-3xl lg:text-4xl text-neutral-500">
             up&nbsp;to per founder
           </span>
         </div>
-        <h2 className="mt-4 font-display font-extrabold tracking-[-0.035em] leading-[1.05] balance text-[clamp(1.5rem,3.6vw,2.6rem)] max-w-2xl text-white/95">
+        <h2 className="mt-4 font-display font-extrabold tracking-[-0.035em] leading-[1.05] balance text-[clamp(1.5rem,3.6vw,2.6rem)] max-w-2xl">
           Direct grants to{" "}
           <Highlight>LGBTQ founders, women, and emerging talent</Highlight>{" "}
           across India &amp; Latin America.
@@ -646,25 +658,16 @@ const Grants = () => (
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.6 }}
               data-testid={`grant-audience-${i}`}
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-[13px] font-medium hover:bg-white hover:text-black hover:border-white transition-all cursor-default"
+              className="inline-flex items-center gap-2 rounded-full border border-black/15 px-5 py-2.5 text-[13px] font-medium hover:bg-black hover:text-white hover:border-black transition-all cursor-default"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              <span className="w-1.5 h-1.5 rounded-full bg-black" />
               {a}
             </motion.span>
           ))}
         </div>
 
         <div className="mt-12">
-          <a
-            data-testid="grants-cta"
-            href="#"
-            className="group relative inline-flex items-center gap-3 rounded-full px-9 py-5 text-[15px] font-semibold tracking-tight transition-all duration-300 hover:-translate-y-0.5 overflow-hidden bg-white text-black shadow-[0_18px_45px_-15px_rgba(255,255,255,0.4)]"
-          >
-            <span>Pursue your dreams</span>
-            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-black text-white">
-              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:rotate-45" />
-            </span>
-          </a>
+          <PillButton testid="grants-cta">Pursue your dreams</PillButton>
         </div>
       </motion.div>
 
@@ -676,7 +679,7 @@ const Grants = () => (
         className="lg:col-span-5 relative"
       >
         <div className="relative aspect-square max-w-md mx-auto">
-          <div className="absolute inset-0 rounded-full overflow-hidden border-2 border-white/10">
+          <div className="absolute inset-0 rounded-full overflow-hidden border border-black/10">
             <img
               data-testid="grants-image"
               src="https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?crop=entropy&cs=srgb&fm=jpg&q=85&w=1000"
