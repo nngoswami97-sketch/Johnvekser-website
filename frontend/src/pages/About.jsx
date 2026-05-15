@@ -686,7 +686,7 @@ const Story = () => {
 
 export default function About() {
   return (
-    <div data-testid="about-root" className="bg-white text-black overflow-hidden">
+    <div data-testid="about-root" className="bg-white text-black overflow-x-hidden">
       <ScrollProgress />
       <Navbar />
       <main className="pt-0">

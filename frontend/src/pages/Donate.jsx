@@ -842,7 +842,7 @@ const FinalCTA = () => (
 
 export default function Donate() {
   return (
-    <div data-testid="donate-root" className="bg-white text-black overflow-hidden">
+    <div data-testid="donate-root" className="bg-white text-black overflow-x-hidden">
       <ScrollProgress />
       <Navbar />
       <main className="pt-0">

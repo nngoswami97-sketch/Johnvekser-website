@@ -543,7 +543,7 @@ const FinalStory = () => (
 
 export default function Contact() {
   return (
-    <div data-testid="contact-root" className="bg-white text-black overflow-hidden">
+    <div data-testid="contact-root" className="bg-white text-black overflow-x-hidden">
       <ScrollProgress />
       <Navbar />
       <main className="pt-0">
